@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#include "fl/fl.h"
-#include "fl/button.h"
-#include "fl/gbsizer.h"
-#define  SOWX_INTERNAL
+#include "FL/fl.h"
+#include "FL/button.h"
+#include "FL/gbsizer.h"
+#define  SOFL_INTERNAL
 #include <Inventor/Fl/SoFl.h>
 #include "Inventor/Fl/SoFlP.h"
 #define protected public
@@ -44,7 +44,7 @@
 #include <Inventor/nodes/SoDirectionalLight.h>
 #include <Inventor/nodes/SoSeparator.h>
 
-#include "fl/fl.h"
+#include "FL/fl.h"
 
 #include "common/SimpleFrame.h"
 
@@ -61,7 +61,7 @@ public:
                                               wxDefaultPosition,
                                               wxSize(400,400));
 
-        wxWindow* window = SoFl::init("renderarea");
+        Fl_Window* window = SoFl::init("renderarea");
 
         SoFlFullViewer * renderarea =
                 new SoFlFullViewer(window,
@@ -75,9 +75,9 @@ public:
 #if 1
         wxFlexGridSizer* horizontal_sizer = new wxFlexGridSizer(1,3,0,0);
 
-        wxWindow* left_panel;
-        wxWindow* center_panel;
-        wxWindow* right_panel;
+        Fl_Window* left_panel;
+        Fl_Window* center_panel;
+        Fl_Window* right_panel;
 
         horizontal_sizer->AddGrowableCol(1);
         horizontal_sizer->AddGrowableRow(0);
@@ -97,7 +97,7 @@ public:
         horizontal_sizer->Add( right_panel, 0, wxEXPAND|wxALL,0);
 #endif
 #if 1
-        wxWindow* bottom_panel;
+        Fl_Window* bottom_panel;
 
         bottom_panel = renderarea->buildBottomTrim(aFrame);
         bottom_panel->SetBackgroundColour( wxColour( 255, 255, 255 ) );

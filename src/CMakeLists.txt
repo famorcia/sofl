@@ -137,22 +137,19 @@ elseif(APPLE)
   endif()
 endif()
 
-include(${wxWidgets_USE_FILE})
-
-add_definitions(-DWXINTL_NO_GETTEXT_MACRO)
 target_include_directories(${PROJECT_NAME}
   PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   PUBLIC
-    ${wxWidgets_INCLUDE_DIRS}
+    ${fltk_INCLUDE_DIRS}
 )
 if(NOT SO${GUI}_BUILD_MAC_FRAMEWORK)
   target_include_directories(${PROJECT_NAME} INTERFACE $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 endif()
 
-#target_link_libraries(${PROJECT_NAME} Coin::Coin ${SOWX_OPENGL_LIBRARIES} ${wxWidgets_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} Coin::Coin ${wxWidgets_LIBRARIES})
+#target_link_libraries(${PROJECT_NAME} Coin::Coin ${SOFL_OPENGL_LIBRARIES} ${fltk_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} Coin::Coin ${fltk_LIBRARIES})
 
 # Add a target to generate API documentation with Doxygen
 if(SO${GUI}_BUILD_DOCUMENTATION)

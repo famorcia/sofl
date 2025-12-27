@@ -40,7 +40,7 @@
 
 #include <Inventor/Fl/devices/SoFlMouse.h>
 #include "Inventor/Fl/devices/SoGuiMouseP.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
 #define PRIVATE(p) (p->pimpl)
 #define PUBLIC(p) (p->pub)
@@ -62,11 +62,11 @@ SoFlMouse::~SoFlMouse(void) {
     delete PRIVATE(this);
 }
 
-void SoFlMouse::enable(wxWindow* widget, SoFlEventHandler * handler, void * closure)    {
+void SoFlMouse::enable(Fl_Window* widget, SoFlEventHandler * handler, void * closure)    {
     // Nothing to do, already managed by callback in GLArea
 }
 
-void SoFlMouse::disable(wxWindow* widget, SoFlEventHandler * handler, void * closure) {
+void SoFlMouse::disable(Fl_Window* widget, SoFlEventHandler * handler, void * closure) {
     // Nothing to do, already managed by callback in GLArea
 }
 
@@ -76,7 +76,7 @@ const SoEvent * SoFlMouse::translateEvent(wxEvent& event) {
 
     wxMouseEvent* mouse_event = dynamic_cast<wxMouseEvent*>(&event);
     if(!mouse_event) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         SoDebugError::postWarning("SoFlMouse::translateEvent",
                                   "is not a mouse event!");
 #endif

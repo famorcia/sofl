@@ -31,8 +31,8 @@
 \**************************************************************************/
 
 #if 0
-#ifndef SOWX_GRAPHEDITOR_H
-#define SOWX_GRAPHEDITOR_H
+#ifndef SOFL_GRAPHEDITOR_H
+#define SOFL_GRAPHEDITOR_H
 
 #include <Inventor/Fl/SoFlComponent.h>
 
@@ -41,8 +41,8 @@ class SoField;
 
 // *************************************************************************
 
-class SOWX_DLL_API SoFlGraphEditor : public SoFlComponent {
-  SOWX_OBJECT_HEADER(SoFlGraphEditor, SoFlComponent);
+class SOFL_DLL_API SoFlGraphEditor : public SoFlComponent {
+  SOFL_OBJECT_HEADER(SoFlGraphEditor, SoFlComponent);
 
 public:
   enum BuildFlag {
@@ -52,7 +52,7 @@ public:
     EVERYTHING =    0x07
   };
 
-  SoFlGraphEditor(wxWindow * const parent = (wxWindow *) NULL,
+  SoFlGraphEditor(Fl_Window * const parent = (Fl_Window *) NULL,
                    const char * const name = (char *) NULL,
                    const SbBool embed = TRUE,
                    const int parts = EVERYTHING);
@@ -62,13 +62,13 @@ public:
   SoNode * getSceneGraph(void) const;
 
 protected:
-  SoFlGraphEditor(wxWindow * const parent, const char * const name,
+  SoFlGraphEditor(Fl_Window * const parent, const char * const name,
                    const SbBool embed, const int parts, const SbBool build);
 
-  wxWindow * buildWidget(wxWindow * parent);
-  virtual wxWindow * buildMenuBarWidget(wxWindow * parent);
-  virtual wxWindow * buildGraphEditorWidget(wxWindow * parent);
-  virtual wxWindow * buildStatusBarWidget(wxWindow * parent);
+  Fl_Window * buildWidget(Fl_Window * parent);
+  virtual Fl_Window * buildMenuBarWidget(Fl_Window * parent);
+  virtual Fl_Window * buildGraphEditorWidget(Fl_Window * parent);
+  virtual Fl_Window * buildStatusBarWidget(Fl_Window * parent);
 
   virtual void sizeChanged(const SbVec2s & size);
 
@@ -79,8 +79,8 @@ protected:
 
   virtual void setStatusMessage(const char * message);
 
-  virtual void nodeSelection(wxWindow * item, SoNode * node);
-  virtual void fieldSelection(wxWindow * item, SoNode * node, SoField * field);
+  virtual void nodeSelection(Fl_Window * item, SoNode * node);
+  virtual void fieldSelection(Fl_Window * item, SoNode * node, SoField * field);
 
   virtual const char * getDefaultWidgetName(void) const;
   virtual const char * getDefaultTitle(void) const;
@@ -89,21 +89,21 @@ protected:
 private:
   void constructor(const SbBool build, const int parts);
 
-  static void saveCB(wxWindow * obj, void* closure);
-  static void closeCB(wxWindow * obj, void* closure);
-  static void selectionCB(wxWindow * obj, void* closure);
+  static void saveCB(Fl_Window * obj, void* closure);
+  static void closeCB(Fl_Window * obj, void* closure);
+  static void selectionCB(Fl_Window * obj, void* closure);
 
-  wxWindow * buildSubGraph(wxWindow * parent, SoNode * node);
+  Fl_Window * buildSubGraph(Fl_Window * parent, SoNode * node);
 
   SoNode * scenegraph;
 
   int buildflags;
-  wxWindow * editorbase;
-  wxWindow * menubar;
-  wxWindow * grapheditor;
-  wxWindow * graphroot;
-  wxWindow * statusbar;
-  wxWindow * statusmessage;
+  Fl_Window * editorbase;
+  Fl_Window * menubar;
+  Fl_Window * grapheditor;
+  Fl_Window * graphroot;
+  Fl_Window * statusbar;
+  Fl_Window * statusmessage;
 
   WxAdjustment * vertical;
   WxAdjustment * horizontal;
@@ -112,5 +112,5 @@ private:
 
 // *************************************************************************
 
-#endif // ! SOWX_H
+#endif // ! SOFL_H
 #endif

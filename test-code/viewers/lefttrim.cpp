@@ -41,7 +41,7 @@
 #include <Inventor/nodes/SoDirectionalLight.h>
 #include <Inventor/nodes/SoSeparator.h>
 
-#include "fl/fl.h"
+#include "FL/fl.h"
 #include "common/SimpleFrame.h"
 
 // Define a new application type
@@ -52,7 +52,7 @@ public:
         if ( !wxApp::OnInit() )
             return false;
 
-        wxWindow* window = SoFl::init("renderarea");
+        Fl_Window* window = SoFl::init("renderarea");
 
         SoFlFullViewer * renderarea =
                 new SoFlFullViewer(window,
@@ -67,7 +67,7 @@ public:
                                                     wxDefaultPosition,
                                                     wxSize(50,200));
         std::clog<<dumpWindowData(asimpleframe)<<std::endl;
-        wxWindow* w = renderarea->buildLeftTrim(asimpleframe);
+        Fl_Window* w = renderarea->buildLeftTrim(asimpleframe);
         //asimpleframe->SetSize(w->GetSize());
         std::clog<<dumpWindowData(asimpleframe)<<std::endl;
         asimpleframe->Layout();

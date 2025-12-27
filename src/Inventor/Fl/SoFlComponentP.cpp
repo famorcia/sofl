@@ -31,7 +31,7 @@
 \**************************************************************************/
 
 #include "Inventor/Fl/SoFlComponentP.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 #include "Inventor/Fl/SoAny.h"
 
 #define PRIVATE(obj) (obj)
@@ -57,7 +57,7 @@ delete_dict_value(SbDict::Key key, void * value) {
 
 void
 SoFlComponentP::atexit_cleanup() {
-    SOWX_STUB();
+    SOFL_STUB();
     if (SoFlComponentP::cursordict) {
         SoFlComponentP::cursordict->applyToAll(delete_dict_value);
         delete SoFlComponentP::cursordict;
@@ -67,14 +67,14 @@ SoFlComponentP::atexit_cleanup() {
 
 void
 SoFlComponentP::fatalerrorHandler(void *userdata) {
-    SOWX_STUB();
+    SOFL_STUB();
     SoFlComponentP * that = (SoFlComponentP *)userdata;
     (void*)(that); // unused for the time being
 }
 
 void
 SoFlComponentP::widgetClosed(void) {
-    SOWX_STUB();
+    SOFL_STUB();
     if (this->closeCB) { this->closeCB(this->closeCBdata, PUBLIC(this)); }
 }
 

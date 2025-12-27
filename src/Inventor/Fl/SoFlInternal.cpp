@@ -36,7 +36,7 @@
 
 
 std::string
-nameToString(const wxWindow* w) {
+nameToString(const Fl_Window* w) {
     std::ostringstream  oss;
     oss<<"name:\""<<w->GetName()<<"\"";
     oss<<" ptr:"<<std::hex<<w;
@@ -61,7 +61,7 @@ dumpSizer(wxSizer* sizer,
 }
 
 std::string
-dumpData(const wxWindow* w,
+dumpData(const Fl_Window* w,
          const std::string& prefix="") {
     std::string out;
     out += prefix;
@@ -88,7 +88,7 @@ dumpData(const wxWindow* w,
 }
 
 std::string
-dumpWindowDataImpl(const wxWindow* window, int level) {
+dumpWindowDataImpl(const Fl_Window* window, int level) {
     if(window == 0) {
         return ("windows is null\n");
     }
@@ -101,10 +101,10 @@ dumpWindowDataImpl(const wxWindow* window, int level) {
     out += "\n";
     out += dumpData(window, tabs);
 
-    const wxWindowList& windows_list =  window->GetWindowChildren();
-    wxWindowList::compatibility_iterator node = windows_list.GetFirst();
+    const Fl_WindowList& windows_list =  window->GetWindowChildren();
+    Fl_WindowList::compatibility_iterator node = windows_list.GetFirst();
     while (node) {
-        wxWindow *win = node->GetData();
+        Fl_Window *win = node->GetData();
         out += dumpWindowDataImpl(win, level+1);
         node = node->GetNext();
     }
@@ -112,6 +112,6 @@ dumpWindowDataImpl(const wxWindow* window, int level) {
 }
 
 std::string
-dumpWindowData(const wxWindow* window) {
+dumpWindowData(const Fl_Window* window) {
     return (dumpWindowDataImpl(window, 0));
 }

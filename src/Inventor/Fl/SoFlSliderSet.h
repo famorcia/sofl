@@ -29,8 +29,8 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXSLIDERSET_H
-#define SOWX_SOWXSLIDERSET_H
+#ifndef SOFL_SOFLSLIDERSET_H
+#define SOFL_SOFLSLIDERSET_H
 
 
 class SoFlSliderSet {
@@ -38,4 +38,4 @@ class SoFlSliderSet {
 };
 
 
-#endif //SOWX_SOWXSLIDERSET_H
+#endif //SOFL_SOFLSLIDERSET_H

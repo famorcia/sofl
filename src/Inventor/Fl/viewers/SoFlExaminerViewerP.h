@@ -30,19 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXEXAMINERVIEWERP_H
-#define SOWX_SOWXEXAMINERVIEWERP_H
+#ifndef SOFL_SOFLEXAMINERVIEWERP_H
+#define SOFL_SOFLEXAMINERVIEWERP_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
 #include <Inventor/SbBasic.h>
 #include "Inventor/Fl/viewers/SoGuiExaminerViewerP.h"
 
-#include "fl/image.h"
-#include "fl/button.h"
-#include "fl/frame.h"
+#include "FL/image.h"
+#include "FL/button.h"
+#include "FL/frame.h"
 
 class SoFlExaminerViewerP :  public SoGuiExaminerViewerP {
 
@@ -59,4 +59,4 @@ public:
 
 };
 
-#endif //SOWX_SOWXEXAMINERVIEWERP_H
+#endif //SOFL_SOFLEXAMINERVIEWERP_H

@@ -30,8 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXLINUXJOYSTICK_H
-#define SOWX_SOWXLINUXJOYSTICK_H
+#ifndef SOFL_SOFLLINUXJOYSTICK_H
+#define SOFL_SOFLLINUXJOYSTICK_H
 
 
 class SoFlLinuxJoystick {
@@ -39,4 +39,4 @@ class SoFlLinuxJoystick {
 };
 
 
-#endif //SOWX_SOWXLINUXJOYSTICK_H
+#endif //SOFL_SOFLLINUXJOYSTICK_H

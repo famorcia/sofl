@@ -37,7 +37,7 @@
 */
 
 #include "WxNativePopupMenu.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
 struct MenuRecord {
     int menuid;
@@ -331,13 +331,13 @@ WxNativePopupMenu::removeMenu(int menuid) {
     assert(rec && "no such menu");
 
     if (rec->menuid == 0) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         SoDebugError::postInfo("WxNativePopupMenu::RemoveMenu", "can't remove root");
 #endif
         return;
     }
     if (rec->parent == NULL) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         SoDebugError::postInfo("WxNativePopupMenu::RemoveMenu", "menu not attached");
 #endif
         return;
@@ -358,7 +358,7 @@ WxNativePopupMenu::removeMenuItem(int itemid) {
     assert(rec && "no such item");
 
     if (rec->parent == NULL) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         SoDebugError::postInfo("WxNativePopupMenu::RemoveMenu", "item not attached");
 #endif
         return;
@@ -369,7 +369,7 @@ WxNativePopupMenu::removeMenuItem(int itemid) {
 
 // Doc in superclass.
 void
-WxNativePopupMenu::popUp(wxWindow * inside, int x, int y) {
+WxNativePopupMenu::popUp(Fl_Window * inside, int x, int y) {
     MenuRecord * rec = this->getMenuRecord(0);
     inside->PopupMenu(rec->menu);
 }

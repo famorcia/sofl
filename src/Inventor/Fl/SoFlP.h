@@ -30,30 +30,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXP_H
-#define SOWX_SOWXP_H
+#ifndef SOFL_SOFLP_H
+#define SOFL_SOFLP_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
-#endif /* !SOWX_INTERNAL */
+#endif /* !SOFL_INTERNAL */
 
 #include <Inventor/Fl/SoGuiP.h>
-#include <fl/timer.h>
-#include <fl/app.h>
-#include <fl/window.h>
+#include <FL/Fl.H>
 
 class SoFlP : public SoGuiP {
 
 public:
 
     bool init;
-    wxWindow* main_frame;
+    Fl_Window* main_frame;
     SoFlP();
-    bool is_a_sowwp_app;
+    bool is_a_soflp_app;
+    /*
     wxAppConsole*  main_app;
     static wxTimer *timerqueuetimer;
     static wxTimer *delaytimeouttimer;
-
+*/
     static void initTimers();
     static void stopTimers();
 
@@ -62,16 +61,17 @@ public:
     void setInitialize(bool);
 
     static void sensorQueueChanged();
+    /*
     void onIdle(wxIdleEvent& event);
     void onClose(wxCloseEvent& event);
 
     void buildWxApp();
     void setWxApp(wxAppConsole*);
-
-    void setMainFrame(wxWindow*);
-    wxWindow* getMainFrame() const;
+*/
+    void setMainFrame(Fl_Window*);
+    Fl_Window* getMainFrame() const;
 
     void finish();
 };
 
-#endif //SOWX_SOWXP_H
+#endif //SOFL_SOFLP_H

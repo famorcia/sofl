@@ -29,15 +29,16 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXINTERNAL_H
-#define SOWX_SOWXINTERNAL_H
+#ifndef SOFL_SOFLINTERNAL_H
+#define SOFL_SOFLINTERNAL_H
 
-#include <fl/fl.h>
+#include <FL/Fl.H>
+#include <string>
 
 class SoFlInternal {
 
 };
 
-std::string dumpWindowData(const wxWindow* window);
+std::string dumpWindowData(const Fl_Window* window);
 
-#endif //SOWX_SOWXINTERNAL_H
+#endif //SOFL_SOFLINTERNAL_H

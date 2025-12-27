@@ -32,11 +32,10 @@
 
 #include "Inventor/Fl/SoFl.h"
 #include "Inventor/Fl/SoFlP.h"
-#include <fl/event.h>
 #include "Inventor/Fl/SoFlInternal.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
-wxWindow*
+Fl_Window*
 SoFl::init(int & argc,
            char ** argv,
            const char * appname,
@@ -45,7 +44,7 @@ SoFl::init(int & argc,
     // retrieve the instance
     SoFlP::instance();
 
-    if (SOWX_DEBUG && SoFlP::instance()->isInitialized()) {
+    if (SOFL_DEBUG && SoFlP::instance()->isInitialized()) {
         SoDebugError::postWarning("SoFl::init",
                                   "This method should be called only once.");
         return SoFlP::instance()->getMainFrame();
@@ -82,7 +81,7 @@ SoFl::init(int & argc,
                                                  NULL);
 
     SoFlP::instance()->setInitialize(true);
-#ifdef SOWX_DEBUG
+#ifdef SOFL_DEBUG
     SoDebugError::postInfo("SoFl::init",
                            "%s",
                            dumpWindowData(SoFlP::instance()->getMainFrame()).c_str());
@@ -91,14 +90,14 @@ SoFl::init(int & argc,
 }
 
 void
-SoFl::init(wxWindow* toplevelwidget) {
+SoFl::init(Fl_Window* toplevelwidget) {
 #ifdef COIN_IV_EXTENSIONS
 #define COIN_IV_EXTENSION(ext) ext::initClass();
     COIN_IV_EXTENSIONS
 #undef COIN_IV_EXTENSION
 #endif
 
-    if (SOWX_DEBUG && SoFlP::instance()->isInitialized()) {
+    if (SOFL_DEBUG && SoFlP::instance()->isInitialized()) {
         SoDebugError::postWarning("SoFl::init",
                                   "This method should be called only once.");
         return;
@@ -132,7 +131,7 @@ SoFl::init(wxWindow* toplevelwidget) {
                                                  NULL);
 
     SoFlP::instance()->setInitialize(true);
-#ifdef SOWX_DEBUG
+#ifdef SOFL_DEBUG
     SoDebugError::postInfo("SoFl::init",
                            "%s",
                            dumpWindowData(SoFlP::instance()->getMainFrame()).c_str());
@@ -166,34 +165,34 @@ SoFl::done() {
 }
 
 void
-SoFl::show(wxWindow* const widget) {
+SoFl::show(Fl_Window* const widget) {
     widget->Show();
 }
 
 void
-SoFl::hide(wxWindow* const widget) {
+SoFl::hide(Fl_Window* const widget) {
     widget->Hide();
 }
 
 void
-SoFl::createSimpleErrorDialog(wxWindow* widget,
+SoFl::createSimpleErrorDialog(Fl_Window* widget,
                               const char * title,
                               const char * string1,
                               const char * string2 ) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
-wxWindow*
+Fl_Window*
 getTopLevelWidget(void) {
     return (wxTheApp->GetTopWindow());
 }
 
-wxWindow*
-SoFl::getShellWidget(const wxWindow* w) {
+Fl_Window*
+SoFl::getShellWidget(const Fl_Window* w) {
 #if 0
-    return (wxGetTopLevelParent((wxWindowBase *) w));
+    return (wxGetTopLevelParent((Fl_WindowBase *) w));
 #else
-    wxWindow* p = const_cast<wxWindow*>(w);
+    Fl_Window* p = const_cast<Fl_Window*>(w);
     while (p !=  NULL) {
         wxFrame* top_frame = dynamic_cast<wxFrame*>(p);
         if ( top_frame ) {
@@ -201,7 +200,7 @@ SoFl::getShellWidget(const wxWindow* w) {
         }
         p = p->GetParent();
     }
-#if SOWX_DEBUG && 0 // debug
+#if SOFL_DEBUG && 0 // debug
     SoDebugError::postInfo("SoFl::getShellWidget",
                          "couldn't find shell for widget at %p", widget);
 #endif // debug
@@ -210,23 +209,23 @@ SoFl::getShellWidget(const wxWindow* w) {
 }
 
 void
-SoFl::setWidgetSize(wxWindow* const widget, const SbVec2s size) {
+SoFl::setWidgetSize(Fl_Window* const widget, const SbVec2s size) {
     assert(widget != 0 && "widget can not be null");
     if ( widget ) {
         widget->SetSize(size[0], size[1]);
     }
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     else  {
         SoDebugError::postWarning("SoFl::setWidgetSize",
                                   "null widget on setting: <%d, %d>.",
                                   size[0], size[1]);
     }
-#endif // SOWX_DEBUG
+#endif // SOFL_DEBUG
 }
 
 
 SbVec2s
-SoFl::getWidgetSize(const wxWindow* widget) {
+SoFl::getWidgetSize(const Fl_Window* widget) {
     assert(widget != 0 && "widget can not be null");
     SbVec2s size(-1,-1);
     if ( widget ) {
@@ -234,10 +233,10 @@ SoFl::getWidgetSize(const wxWindow* widget) {
         size[0] = wx_size.GetWidth();
         size[1] = wx_size.GetHeight();
     }
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     else  {
         SoDebugError::postWarning("SoFl::getWidgetSize",
                                   "null widget");
     }
-#endif // SOWX_DEBUG
+#endif // SOFL_DEBUG
 }

@@ -30,12 +30,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXGLAREA_H
-#define SOWX_SOWXGLAREA_H
+#ifndef SOFL_SOFLGLAREA_H
+#define SOFL_SOFLGLAREA_H
 
-#include <fl/fl.h>
-#include <fl/glcanvas.h>
-#include <fl/timer.h>
+#include <FL/fl.h>
+#include <FL/glcanvas.h>
+#include <FL/timer.h>
 #include <vector>
 
 class SoFlGLWidgetP;
@@ -46,7 +46,7 @@ public:
 
     typedef std::vector<int> GLFormat;
 
-    SoFlGLArea(wxWindow *parent,
+    SoFlGLArea(Fl_Window *parent,
                const GLFormat& );
 
     virtual ~SoFlGLArea();
@@ -80,4 +80,4 @@ wxDECLARE_EVENT_TABLE();
 wxDECLARE_EVENT(SO_WX_GL_INIT, wxCommandEvent);
 wxDECLARE_EVENT(SO_WX_GL_DRAW, wxCommandEvent);
 
-#endif //SOWX_SOWXGLAREA_H
+#endif //SOFL_SOFLGLAREA_H

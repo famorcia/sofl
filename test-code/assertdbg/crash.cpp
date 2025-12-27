@@ -66,7 +66,7 @@ callback(void * closure, SoAction * action)
 int
 main(int argc, char ** argv)
 {
-  wxWindow * win = SoFl::init("Debug Test");
+  Fl_Window * win = SoFl::init("Debug Test");
   SoFlExaminerViewer * viewer = new SoFlExaminerViewer(win);
   viewer->show();
   SoFl::show(win);

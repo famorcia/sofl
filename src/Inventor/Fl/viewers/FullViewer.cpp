@@ -35,7 +35,7 @@
 #include "Inventor/Fl/widgets/SoFlThumbWheel.h"
 #include <Inventor/Fl/widgets/SoFlPopupMenu.h>
 #include "Inventor/Fl/SoFlInternal.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 #include "Inventor/Fl/SoFlP.h"
 #include "ButtonIndexValues.h"
 
@@ -47,17 +47,17 @@
 #include <Inventor/Fl/common/pixmaps/view_all.xpm>
 #include <Inventor/Fl/common/pixmaps/seek.xpm>
 
-#include <fl/stattext.h>
-#include <fl/sizer.h>
+#include <FL/stattext.h>
+#include <FL/sizer.h>
 
 #define PUBLIC(o) (o->pub)
 #define PRIVATE(o) (o->pimpl)
 
-SOWX_OBJECT_ABSTRACT_SOURCE(SoFlFullViewer);
+SOFL_OBJECT_ABSTRACT_SOURCE(SoFlFullViewer);
 
 const int XPM_BUTTON_SIZE = 24;
 
-SoFlFullViewer::SoFlFullViewer(wxWindow* parent,
+SoFlFullViewer::SoFlFullViewer(Fl_Window* parent,
                                const char * name,
                                SbBool embed,
                                BuildFlag buildFlag,
@@ -116,7 +116,7 @@ SoFlFullViewer::SoFlFullViewer(wxWindow* parent,
     if (! build) return;
 
     this->setClassName("SoFlFullViewer");
-    wxWindow * viewer = this->buildWidget(this->getParentWidget());
+    Fl_Window * viewer = this->buildWidget(this->getParentWidget());
     this->setBaseWidget(viewer);
 }
 
@@ -129,11 +129,11 @@ SoFlFullViewer::~SoFlFullViewer() {
     delete PRIVATE(this);
 }
 
-wxWindow*
-SoFlFullViewer::buildWidget(wxWindow* parent) {
+Fl_Window*
+SoFlFullViewer::buildWidget(Fl_Window* parent) {
     // This will build the main view widgets, along with the decorations
     // widgets and popup menu if they are enabled.
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlFullViewer::buildWidget", "[invoked]");
     parent->SetName("MainWindow");
     SoDebugError::postInfo("SoFlFullViewer::buildWidget", "Step-1");
@@ -145,14 +145,14 @@ SoFlFullViewer::buildWidget(wxWindow* parent) {
 
     this->registerWidget(PRIVATE(this)->viewerwidget);
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     PRIVATE(this)->viewerwidget->SetBackgroundColour(wxColour(125, 150, 190));
 #endif
 
     PRIVATE(this)->canvas = inherited::buildWidget(PRIVATE(this)->viewerwidget);
     PRIVATE(this)->canvas->SetMinSize(wxSize(100,100));
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     PRIVATE(this)->canvas->SetBackgroundColour(wxColour(250, 0, 255));
 #endif
 
@@ -162,7 +162,7 @@ SoFlFullViewer::buildWidget(wxWindow* parent) {
     if (PRIVATE(this)->menuenabled)
         this->buildPopupMenu();
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         SoDebugError::postInfo("SoFlFullViewer::buildWidget", "Step-2");
     dumpWindowData(parent);
 #endif
@@ -175,7 +175,7 @@ SoFlFullViewer::buildWidget(wxWindow* parent) {
 
 void
 SoFlFullViewer::setDecoration(const SbBool enable){
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     if ((enable  && this->isDecoration()) ||
         (!enable && !this->isDecoration())) {
         SoDebugError::postWarning("SoFlFullViewer::setDecoration",
@@ -196,7 +196,7 @@ SoFlFullViewer::isDecoration(void) const{
 }
 
 void SoFlFullViewer::setPopupMenuEnabled(const SbBool enable){
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     if ((enable && this->isPopupMenuEnabled()) ||
         (!enable && !this->isPopupMenuEnabled())) {
         SoDebugError::postWarning("SoFlFullViewer::setPopupMenuEnabled",
@@ -213,40 +213,40 @@ SoFlFullViewer::isPopupMenuEnabled(void) const{
     return (PRIVATE(this)->menuenabled);
 }
 
-wxWindow*
+Fl_Window*
 SoFlFullViewer::getAppPushButtonParent(void) const {
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }
 
 void
-SoFlFullViewer::addAppPushButton(wxWindow* newButton)  {
-    SOWX_STUB();
+SoFlFullViewer::addAppPushButton(Fl_Window* newButton)  {
+    SOFL_STUB();
 }
 
 void
-SoFlFullViewer::insertAppPushButton(wxWindow* newButton, int index) {
-    SOWX_STUB();
+SoFlFullViewer::insertAppPushButton(Fl_Window* newButton, int index) {
+    SOFL_STUB();
 }
 
 void
-SoFlFullViewer::removeAppPushButton(wxWindow* oldButton) {
-    SOWX_STUB();
+SoFlFullViewer::removeAppPushButton(Fl_Window* oldButton) {
+    SOFL_STUB();
 }
 
 int
-SoFlFullViewer::findAppPushButton(wxWindow* oldButton) const {
-    SOWX_STUB();
+SoFlFullViewer::findAppPushButton(Fl_Window* oldButton) const {
+    SOFL_STUB();
     return (0);
 }
 
 int
 SoFlFullViewer::lengthAppPushButton(void) const {
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }
 
-wxWindow*
+Fl_Window*
 SoFlFullViewer::getRenderAreaWidget(void) const {
     return (PRIVATE(this)->canvas);
 }
@@ -255,7 +255,7 @@ void
 SoFlFullViewer::setViewing(SbBool enable) {
     if ((enable && this->isViewing()) ||
         (!enable && !this->isViewing())) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         SoDebugError::postWarning("SoFlFullViewer::setViewing",
                               "view mode already %s", enable ? "on" : "off");
 #endif
@@ -275,21 +275,21 @@ SoFlFullViewer::setViewing(SbBool enable) {
 
 
 void
-SoFlFullViewer::buildDecoration(wxWindow* parent) {
+SoFlFullViewer::buildDecoration(Fl_Window* parent) {
     this->leftDecoration = this->buildLeftTrim(parent);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     this->leftDecoration->SetBackgroundColour(wxColour(255, 0, 0));
 #endif
     this->bottomDecoration = this->buildBottomTrim(parent);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     this->bottomDecoration->SetBackgroundColour(wxColour(0, 255, 0));
 #endif
     this->rightDecoration = this->buildRightTrim(parent);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     this->rightDecoration->SetBackgroundColour(wxColour(0, 0, 255));
 #endif
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     dumpWindowData(this->leftDecoration);
     dumpWindowData(this->rightDecoration);
     dumpWindowData(this->bottomDecoration);
@@ -298,13 +298,13 @@ SoFlFullViewer::buildDecoration(wxWindow* parent) {
     PRIVATE(this)->initThumbWheelEventMap();
 }
 
-wxWindow*
-SoFlFullViewer::buildLeftTrim(wxWindow* parent){
+Fl_Window*
+SoFlFullViewer::buildLeftTrim(Fl_Window* parent){
     wxPanel* p = new wxPanel(parent);
     p->SetName("leftTrim");
     p->SetMinSize(wxSize(24,100));
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     p->SetBackgroundColour(wxColour(255, 0, 255));
 #endif
 
@@ -318,33 +318,33 @@ SoFlFullViewer::buildLeftTrim(wxWindow* parent){
     sizer->Add(t, 0, wxALL |wxALIGN_CENTER_HORIZONTAL, 0);
     p->SetSizer(sizer);
     p->Fit();
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     dumpWindowData(p);
 #endif
     return p;
 }
 
-wxWindow*
-SoFlFullViewer::buildBottomTrim(wxWindow* parent) {
-    wxWindow * w = new wxPanel(parent);
+Fl_Window*
+SoFlFullViewer::buildBottomTrim(Fl_Window* parent) {
+    Fl_Window * w = new wxPanel(parent);
     w->SetName("bottomTrim");
     w->SetMinSize(wxSize(100,24));
     wxStaticText* label = new wxStaticText( w, wxID_ANY, this->leftWheelStr);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     label->SetBackgroundColour(wxColour(200,200,0));
 #endif
     label->SetName("left wheel label");
     this->leftWheelLabel = label;
 
     label = new wxStaticText( w, wxID_ANY, this->bottomWheelStr ,wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER_HORIZONTAL);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     label->SetBackgroundColour(wxColour(100,100,0));
 #endif
     label->SetName("bottom wheel label");
     this->bottomWheelLabel = label;
 
     label = new wxStaticText( w, wxID_ANY, this->rightWheelStr, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     label->SetBackgroundColour(wxColour(100,50,0));
 #endif
     label->SetName("right wheel label");
@@ -352,7 +352,7 @@ SoFlFullViewer::buildBottomTrim(wxWindow* parent) {
 
     SoFlThumbWheel * t = new SoFlThumbWheel(SoFlThumbWheel::Horizontal, w);
     t->SetName("bottom thumb wheel");
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     t->SetBackgroundColour(wxColour(0,0,0));
 #endif
 
@@ -377,11 +377,11 @@ SoFlFullViewer::buildBottomTrim(wxWindow* parent) {
     return w;
 }
 
-wxWindow*
-SoFlFullViewer::buildRightTrim(wxWindow* parent) {
+Fl_Window*
+SoFlFullViewer::buildRightTrim(Fl_Window* parent) {
     wxPanel* p = new wxPanel(parent);
     p->SetName("rightTrim");
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     p->SetBackgroundColour(wxColour(255,0,0));
 #endif
     p->SetMinSize(wxSize(XPM_BUTTON_SIZE+12, 100));
@@ -389,7 +389,7 @@ SoFlFullViewer::buildRightTrim(wxWindow* parent) {
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
     SoFlThumbWheel * t = new SoFlThumbWheel(SoFlThumbWheel::Vertical, p);
     t->SetName("right thumb wheel");
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     t->SetBackgroundColour(wxColour(100,250,110));
 #endif
     t->setRangeBoundaryHandling(SoFlThumbWheel::ACCUMULATE);
@@ -404,17 +404,17 @@ SoFlFullViewer::buildRightTrim(wxWindow* parent) {
     return p;
 }
 
-wxWindow*
-SoFlFullViewer::buildAppButtons(wxWindow* parent) {
-    SOWX_STUB();
+Fl_Window*
+SoFlFullViewer::buildAppButtons(Fl_Window* parent) {
+    SOFL_STUB();
     return (0);
 }
 
-wxWindow*
-SoFlFullViewer::buildViewerButtons(wxWindow* parent) {
+Fl_Window*
+SoFlFullViewer::buildViewerButtons(Fl_Window* parent) {
     wxPanel * w = new wxPanel(parent);
     w->SetName("viewerButtons");
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     w->SetBackgroundColour(wxColour(250,100,250));
 #endif
     this->createViewerButtons(w, PRIVATE(this)->viewerbuttons);
@@ -431,7 +431,7 @@ SoFlFullViewer::buildViewerButtons(wxWindow* parent) {
 }
 
 void
-SoFlFullViewer::createViewerButtons(wxWindow* parent,
+SoFlFullViewer::createViewerButtons(Fl_Window* parent,
                                     SbPList * button_list) {
     for (int i=0; i <= SEEK_BUTTON; i++) {
         wxAnyButton *p = new wxButton(parent, i);
@@ -545,13 +545,13 @@ SoFlFullViewer::setRightWheelString(const char * const name) {
 
 void
 SoFlFullViewer::sizeChanged(const SbVec2s & size) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlFullViewer::sizeChanged", "(%d, %d)",
                          size[0], size[1]);
 #endif
 
     SbVec2s new_size(size);
-    // wxWidgets already has only size of gl area
+    // fltk already has only size of gl area
     // decorations size do not need to be removed
     /*
      if (PRIVATE(this)->decorations) {

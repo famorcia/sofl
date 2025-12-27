@@ -1,5 +1,5 @@
 /*
- * wxCoin3D Porting on wxWidgets of Coin3D (a.k.a Open Inventor) examples
+ * wxCoin3D Porting on fltk of Coin3D (a.k.a Open Inventor) examples
  * Copyright (C) 2022  Fabrizio Morciano
 
  * This library is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 #include <Inventor/nodes/SoDirectionalLight.h>
 #include <Inventor/nodes/SoSeparator.h>
 
-#include "fl/fl.h"
+#include "FL/fl.h"
 
 #include "common/get_scene_graph.h"
 
@@ -36,7 +36,7 @@ public:
         if ( !wxApp::OnInit() )
             return false;
 
-        wxWindow* window = SoFl::init("renderarea");
+        Fl_Window* window = SoFl::init("renderarea");
 
         SoSeparator * root = new SoSeparator;
         root->ref();

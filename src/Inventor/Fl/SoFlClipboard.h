@@ -29,8 +29,8 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXCLIPBOARD_H
-#define SOWX_SOWXCLIPBOARD_H
+#ifndef SOFL_SOFLCLIPBOARD_H
+#define SOFL_SOFLCLIPBOARD_H
 
 
 class SoFlClipboard {
@@ -38,4 +38,4 @@ class SoFlClipboard {
 };
 
 
-#endif //SOWX_SOWXCLIPBOARD_H
+#endif //SOFL_SOFLCLIPBOARD_H

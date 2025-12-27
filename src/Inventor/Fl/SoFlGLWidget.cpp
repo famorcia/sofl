@@ -33,15 +33,15 @@
 #include "Inventor/Fl/SoFlGLWidget.h"
 #include "Inventor/Fl/SoFlGLWidgetP.h"
 #include "Inventor/Fl/widgets/SoFlGLArea.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 #include "Inventor/Fl/SoAny.h"
 
-SOWX_OBJECT_ABSTRACT_SOURCE(SoFlGLWidget);
+SOFL_OBJECT_ABSTRACT_SOURCE(SoFlGLWidget);
 
 #define PRIVATE(obj) ((obj)->pimpl)
 #define PUBLIC(obj) ((obj)->pub)
 
-SoFlGLWidget::SoFlGLWidget(wxWindow* const parent ,
+SoFlGLWidget::SoFlGLWidget(Fl_Window* const parent ,
                            const char * const name ,
                            const SbBool embed ,
                            const int glmodes ,
@@ -68,8 +68,8 @@ SoFlGLWidget::SoFlGLWidget(wxWindow* const parent ,
     }
 
     this->setClassName("SoFlGLWidget");
-    wxWindow* parent_widget = this->getParentWidget();
-    wxWindow* widget = this->buildWidget(parent_widget);
+    Fl_Window* parent_widget = this->getParentWidget();
+    Fl_Window* widget = this->buildWidget(parent_widget);
     this->setBaseWidget(widget);
 }
 
@@ -84,12 +84,12 @@ SoFlGLWidget::~SoFlGLWidget() {
 
 void
 SoFlGLWidget::setBorder(const SbBool enable) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void
 SoFlGLWidget::setQuadBufferStereo(const SbBool enable) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool
@@ -100,7 +100,7 @@ SoFlGLWidget::isQuadBufferStereo(void) const {
 void
 SoFlGLWidget::setGLSize(const SbVec2s size){
     if (size == PRIVATE(this)->glSize) return;
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidget::setGLSize",
                            "[invoked (%d, %d)]", size[0], size[1]);
 #endif // debug
@@ -133,7 +133,7 @@ SbBool
 SoFlGLWidget::isRGBMode(void){
     const bool rgb_mode = SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes,
                                                                 WX_GL_RGBA);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidget::isRGBMode",
                            ": %d",
                            rgb_mode);
@@ -154,12 +154,12 @@ SoFlGLWidget::glUnlockNormal(void){
 
 void
 SoFlGLWidget::glLockOverlay(void){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void
 SoFlGLWidget::glUnlockOverlay(void){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void
@@ -174,7 +174,7 @@ SoFlGLWidget::glFlushBuffer(void){
 
 SbBool
 SoFlGLWidget::glScheduleRedraw(void){
-    SOWX_STUB();
+    SOFL_STUB();
     return (TRUE);
 }
 
@@ -185,14 +185,14 @@ SoFlGLWidget::isBorder(void) const{
 
 void
 SoFlGLWidget::setDoubleBuffer(const SbBool enable){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool
 SoFlGLWidget::isDoubleBuffer(void) const{
     const bool double_buffer = SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes,
                                                                 WX_GL_DOUBLEBUFFER);
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidget::isDoubleBuffer",
                            ": %d",
                            double_buffer);
@@ -212,79 +212,79 @@ SoFlGLWidget::isDrawToFrontBufferEnable(void) const{
 
 void
 SoFlGLWidget::setAccumulationBuffer(const SbBool enable){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool
 SoFlGLWidget::getAccumulationBuffer(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (FALSE);
 }
 
 void
 SoFlGLWidget::setStencilBuffer(const SbBool enable){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool
 SoFlGLWidget::getStencilBuffer(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (FALSE);
 }
 
 void
 SoFlGLWidget::setAlphaChannel(const SbBool enable){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool
 SoFlGLWidget::getAlphaChannel(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (FALSE);
 }
 
 void
 SoFlGLWidget::setOverlayRender(const SbBool onoff){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool
 SoFlGLWidget::isOverlayRender(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (FALSE);
 }
 
 void
 SoFlGLWidget::setSampleBuffers(const int numsamples){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 int
 SoFlGLWidget::getSampleBuffers(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }
 
-wxWindow*
+Fl_Window*
 SoFlGLWidget::getGLWidget(void) const{
     return (PRIVATE(this)->currentglwidget);
 }
 
-wxWindow*
+Fl_Window*
 SoFlGLWidget::getNormalWidget(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }
 
-wxWindow*
+Fl_Window*
 SoFlGLWidget::getOverlayWidget(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }
 
 SbBool
 SoFlGLWidget::hasOverlayGLArea(void) const{
-    SOWX_STUB();
+    SOFL_STUB();
     return (false);
 }
 
@@ -296,7 +296,7 @@ SoFlGLWidget::hasNormalGLArea(void) const{
 
 unsigned long
 SoFlGLWidget::getOverlayTransparentPixel(void){
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }
 
@@ -307,8 +307,8 @@ SoFlGLWidget::processEvent(wxEvent& WXUNUSED(event)){
     // to the widget.
 }
 
-wxWindow *
-SoFlGLWidget::buildWidget(wxWindow* parent) {
+Fl_Window *
+SoFlGLWidget::buildWidget(Fl_Window* parent) {
     assert(parent !=0 && "parent can not be null");
     PRIVATE(this)->glparent = parent;
     return (PRIVATE(this)->buildGLWidget());
@@ -316,7 +316,7 @@ SoFlGLWidget::buildWidget(wxWindow* parent) {
 
 void
 SoFlGLWidget::redrawOverlay(void){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void
@@ -330,13 +330,13 @@ SoFlGLWidget::initGraphic(void){
 }
 void
 SoFlGLWidget::initOverlayGraphic(void){
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void
 SoFlGLWidget::sizeChanged(const SbVec2s & size){
-    SOWX_STUB();
-#if SOWX_DEBUG
+    SOFL_STUB();
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::sizeChanged",
                            "<%d, %d>",
                            size[0], size[1]
@@ -346,8 +346,8 @@ SoFlGLWidget::sizeChanged(const SbVec2s & size){
 }
 
 void
-SoFlGLWidget::widgetChanged(wxWindow* w){
-    SOWX_STUB();
+SoFlGLWidget::widgetChanged(Fl_Window* w){
+    SOFL_STUB();
 }
 
 #undef PRIVATE

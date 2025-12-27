@@ -32,11 +32,11 @@
 
 #include "Inventor/Fl/widgets/SoFlGLArea.h"
 #include "Inventor/Fl/SoFlGLWidgetP.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
-#include "fl/fl.h"
-#include "fl/file.h"
-#include "fl/dcclient.h"
+#include "FL/fl.h"
+#include "FL/file.h"
+#include "FL/dcclient.h"
 
 #include <GL/gl.h>
 #include <map>
@@ -50,7 +50,7 @@ wxDEFINE_EVENT(SO_WX_GL_INIT, wxCommandEvent);
 wxDEFINE_EVENT(SO_WX_GL_DRAW, wxCommandEvent);
 
 
-SoFlGLArea::SoFlGLArea(wxWindow *parent,
+SoFlGLArea::SoFlGLArea(Fl_Window *parent,
                        const std::vector<int>& attributes)
         : wxGLCanvas(parent,
                      wxID_ANY,
@@ -70,7 +70,7 @@ SoFlGLArea::~SoFlGLArea() {
 }
 
 void SoFlGLArea::OnPaint(wxPaintEvent& event ) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLArea::OnPaint",
                            "size:%d %d",
                            GetSize().x,
@@ -91,7 +91,7 @@ void SoFlGLArea::OnPaint(wxPaintEvent& event ) {
 }
 
 void SoFlGLArea::OnEraseBackground(wxEraseEvent& WXUNUSED(event)) {
-    SOWX_STUB();
+    SOFL_STUB();
     // Do nothing, to avoid flashing on MSW
 }
 
@@ -169,7 +169,7 @@ SoFlGLArea::isGLFeatureAvailable(const SoFlGLArea::GLFormat& format,
 bool
 SoFlGLArea::areEqual(const SoFlGLArea::GLFormat &format1,
                      const SoFlGLArea::GLFormat &format2) {
-    SOWX_STUB();
+    SOFL_STUB();
     return (false);
 }
 

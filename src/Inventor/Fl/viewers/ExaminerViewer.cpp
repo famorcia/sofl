@@ -37,7 +37,7 @@
 #include <Inventor/nodes/SoOrthographicCamera.h>
 #include <Inventor/nodes/SoPerspectiveCamera.h>
 
-#include "sowxdefs.h"
+#include "sofldefs.h"
 #include "ButtonIndexValues.h"
 
 
@@ -49,9 +49,9 @@
 #define PRIVATE(obj) ((obj)->pimpl)
 #define PUBLIC(obj) ((obj)->pub)
 
-SOWX_OBJECT_SOURCE(SoFlExaminerViewer);
+SOFL_OBJECT_SOURCE(SoFlExaminerViewer);
 
-SoFlExaminerViewer::SoFlExaminerViewer(wxWindow* parent,
+SoFlExaminerViewer::SoFlExaminerViewer(Fl_Window* parent,
                                        char const* name,
                                        int embed,
                                        SoFlFullViewer::BuildFlag flag,
@@ -61,7 +61,7 @@ SoFlExaminerViewer::SoFlExaminerViewer(wxWindow* parent,
     PRIVATE(this)->constructor(TRUE);
 }
 
-SoFlExaminerViewer::SoFlExaminerViewer(wxWindow *parent,
+SoFlExaminerViewer::SoFlExaminerViewer(Fl_Window *parent,
                                        const char *name,
                                        SbBool embed,
                                        SoFlFullViewer::BuildFlag flag,
@@ -108,7 +108,7 @@ SoFlExaminerViewer::setCamera(SoCamera * newCamera) {
 }
 
 void
-SoFlExaminerViewer::createViewerButtons(wxWindow* parent,
+SoFlExaminerViewer::createViewerButtons(Fl_Window* parent,
                                         SbPList * buttonlist) {
 
     inherited::createViewerButtons(parent, buttonlist);

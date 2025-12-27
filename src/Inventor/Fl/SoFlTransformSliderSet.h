@@ -30,8 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXTRANSFORMSLIDERSET_H
-#define SOWX_SOWXTRANSFORMSLIDERSET_H
+#ifndef SOFL_SOFLTRANSFORMSLIDERSET_H
+#define SOFL_SOFLTRANSFORMSLIDERSET_H
 
 
 class SoFlTransformSliderSet {
@@ -39,4 +39,4 @@ class SoFlTransformSliderSet {
 };
 
 
-#endif //SOWX_SOWXTRANSFORMSLIDERSET_H
+#endif //SOFL_SOFLTRANSFORMSLIDERSET_H

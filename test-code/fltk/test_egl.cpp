@@ -2,12 +2,12 @@
 // Created by fmorciano on 1/22/23.
 //
 
-#include <fl/fl.h>
-#include <fl/glcanvas.h>
+#include <FL/fl.h>
+#include <FL/glcanvas.h>
 
 class MyCanvas : public wxGLCanvas {
 public:
-    MyCanvas (wxWindow* parent,
+    MyCanvas (Fl_Window* parent,
               int * attributes): wxGLCanvas(parent,
         wxID_ANY,
         NULL) {

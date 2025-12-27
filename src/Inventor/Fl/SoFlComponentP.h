@@ -29,14 +29,14 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXCOMPONENTP_H
-#define SOWX_SOWXCOMPONENTP_H
+#ifndef SOFL_SOFLCOMPONENTP_H
+#define SOFL_SOFLCOMPONENTP_H
 
 #include "Inventor/Fl/SoGuiComponentP.h"
 #include "Inventor/Fl/SoFlComponent.h"
 #include <Inventor/Fl/SoFlCursor.h>
-#include <fl/window.h>
-#include <fl/frame.h>
+#include <FL/Fl_Window.H>
+#include <string>
 
 class SoFlComponentP : public SoGuiComponentP {
 public:
@@ -46,12 +46,12 @@ public:
     static void fatalerrorHandler(void * userdata);
     static void atexit_cleanup();
 
-    static class wxCursor * getNativeCursor(const SoFlCursor::CustomCursor * cc);
+    //static class wxCursor * getNativeCursor(const SoFlCursor::CustomCursor * cc);
 
     // Variables.
 
-    wxWindow * parent;
-    wxWindow * widget;
+    Fl_Window * parent;
+    Fl_Window * widget;
     SbBool embedded, shelled;
     std::string classname, widgetname;
     SoFlComponentCB * closeCB;
@@ -73,4 +73,4 @@ private:
 };
 
 
-#endif //SOWX_SOWXCOMPONENTP_H
+#endif //SOFL_SOFLCOMPONENTP_H

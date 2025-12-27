@@ -8,7 +8,7 @@ TODO
 * [ ] Improve automatic testing
 * [ ] Add middle mouse button for translation
 * [ ] Restore *Editor classes
-* [ ] Use EGL in wxWidgets (required in ubuntu)
+* [ ] Use EGL in fltk (required in ubuntu)
 * [X] wxQT does not support wxGLAttributes, require list of int!
     Fixed now use list of int
 * [ ] wxX11 does not support wxCheckButtons

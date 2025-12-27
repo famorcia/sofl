@@ -33,7 +33,7 @@
 #define BOOST_TEST_NO_LIB 1
 #include <boost/test/unit_test.hpp>
 #include "Inventor/Fl/SoFl.h"
-#include <fl/version.h>
+#include <FL/version.h>
 
 BOOST_AUTO_TEST_SUITE(TestSoFl);
 

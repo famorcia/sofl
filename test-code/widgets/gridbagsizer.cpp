@@ -30,9 +30,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#include "fl/fl.h"
-#include "fl/button.h"
-#include "fl/gbsizer.h"
+#include "FL/fl.h"
+#include "FL/button.h"
+#include "FL/gbsizer.h"
 
 #include "common/SimpleFrame.h"
 

@@ -30,21 +30,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXKEYBOARDP_H
-#define SOWX_SOWXKEYBOARDP_H
+#ifndef SOFL_SOFLKEYBOARDP_H
+#define SOFL_SOFLKEYBOARDP_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
-#endif /* !SOWX_INTERNAL */
+#endif /* !SOFL_INTERNAL */
 
 #include "Inventor/Fl/devices/SoGuiKeyboardP.h"
 #include <Inventor/events/SoKeyboardEvent.h>
-#include <fl/event.h>
+#include <FL/Fl.H>
 
 class SoFlKeyboardP : public SoGuiKeyboardP {
 public:
     struct key1map {
-        wxKeyCode from;                // Fl val
+        // wxKeyCode from;                // Fl val
         SoKeyboardEvent::Key to; // So val
         char printable;
     };
@@ -54,4 +54,4 @@ public:
     static void make_translation_table(void);
 };
 
-#endif //SOWX_SOWXKEYBOARDP_H
+#endif //SOFL_SOFLKEYBOARDP_H

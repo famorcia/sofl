@@ -40,7 +40,7 @@
 
 
 #include <Inventor/Fl/widgets/SoFlThumbWheel.h>
-#include "fl/fl.h"
+#include "FL/fl.h"
 
 #include "common/SimpleFrame.h"
 

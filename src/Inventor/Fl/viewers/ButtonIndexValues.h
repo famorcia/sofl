@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_BUTTONINDEXVALUES_H
-#define SOWX_BUTTONINDEXVALUES_H
+#ifndef SOFL_BUTTONINDEXVALUES_H
+#define SOFL_BUTTONINDEXVALUES_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
@@ -51,4 +51,4 @@ enum {
     Z_BUTTON
 };
 
-#endif //SOWX_BUTTONINDEXVALUES_H
+#endif //SOFL_BUTTONINDEXVALUES_H

@@ -1,5 +1,5 @@
 
-set(TEST_NAME test_soww_devices)
+set(TEST_NAME test_sofl_devices)
 add_executable(${TEST_NAME} ../TestSuiteMain.cpp TestSoFlKeyboardP.cpp)
 target_link_libraries(${TEST_NAME}  SoFl )
 

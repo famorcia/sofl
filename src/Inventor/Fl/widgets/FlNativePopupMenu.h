@@ -30,8 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_WXNATIVEPOPUPMENU_H
-#define SOWX_WXNATIVEPOPUPMENU_H
+#ifndef SOFL_WXNATIVEPOPUPMENU_H
+#define SOFL_WXNATIVEPOPUPMENU_H
 
 #include <Inventor/Fl/widgets/SoFlPopupMenu.h>
 
@@ -65,7 +65,7 @@ public:
     virtual void removeMenu(int menuid) ;
     virtual void removeMenuItem(int itemid) ;
 
-    virtual void popUp(wxWindow* inside, int x, int y) ;
+    virtual void popUp(Fl_Window* inside, int x, int y) ;
 
 protected:
 
@@ -85,4 +85,4 @@ private:
 };
 
 
-#endif //SOWX_WXNATIVEPOPUPMENU_H
+#endif //SOFL_WXNATIVEPOPUPMENU_H

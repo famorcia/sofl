@@ -30,8 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_MYFRAME_H
-#define SOWX_MYFRAME_H
+#ifndef SOFL_MYFRAME_H
+#define SOFL_MYFRAME_H
 
 #include "example_1.h"
 
@@ -46,4 +46,4 @@ public:
 };
 
 
-#endif //SOWX_MYFRAME_H
+#endif //SOFL_MYFRAME_H

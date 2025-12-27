@@ -29,16 +29,16 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXFULLVIEWERP_H
-#define SOWX_SOWXFULLVIEWERP_H
+#ifndef SOFL_SOFLFULLVIEWERP_H
+#define SOFL_SOFLFULLVIEWERP_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
 #include "Inventor/Fl/viewers/SoGuiFullViewerP.h"
 #include "Inventor/Fl/viewers/SoFlFullViewer.h"
-#include <fl/tglbtn.h>
+#include <FL/tglbtn.h>
 #include <string>
 #include <map>
 
@@ -49,8 +49,8 @@ public:
     ~SoFlFullViewerP();
 
     std::string popupmenutitle;
-    wxWindow * viewerwidget;
-    wxWindow * canvas;
+    Fl_Window * viewerwidget;
+    Fl_Window * canvas;
     wxToggleButton * interactbutton;
     wxToggleButton * viewbutton;
     SbBool decorations;
@@ -58,7 +58,7 @@ public:
     SbBool menuenabled;
     wxSizer* mainlayout;
     wxBoxSizer * appbuttonlayout;
-    wxWindow* appbuttonform;
+    Fl_Window* appbuttonform;
     SbPList * appbuttonlist;
     SbPList * viewerbuttons;
 
@@ -80,12 +80,12 @@ public:
         VoidFuncOnePar onMove;
     };
 
-    typedef std::map<wxWindow*, WheelFunctions> MapEvent;
+    typedef std::map<Fl_Window*, WheelFunctions> MapEvent;
     MapEvent objectMap;
     void initThumbWheelEventMap();
 
     void setLeftWheelValue(const float value);
-    static void setThumbWheelValue(wxWindow*, float value);
+    static void setThumbWheelValue(Fl_Window*, float value);
     void showDecorationWidgets(SbBool onOff);
 
     // Thumbwheels.
@@ -112,7 +112,7 @@ public:
     void increaseInteractiveCount();
     void decreaseInteractiveCount();
 
-    void bindEvents(wxWindow*);
+    void bindEvents(Fl_Window*);
 
     // Return pointer to pushbutton in right-side decoration bar.
     wxAnyButton * getViewerbutton(const int idx) {
@@ -123,4 +123,4 @@ wxDECLARE_EVENT_TABLE();
 };
 
 
-#endif //SOWX_SOWXFULLVIEWERP_H
+#endif //SOFL_SOFLFULLVIEWERP_H

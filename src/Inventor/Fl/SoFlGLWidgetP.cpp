@@ -37,7 +37,7 @@
 
 #include <Inventor/SbTime.h>
 
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
 #define PRIVATE(obj) ((obj)->pimpl)
 #define PUBLIC(obj) ((obj)->pub)
@@ -54,7 +54,7 @@ SoFlGLWidgetP::~SoFlGLWidgetP() {
 void
 SoFlGLWidgetP::gl_init(wxCommandEvent& )
 {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("gl_init", "invoked");
 #endif
 
@@ -63,7 +63,7 @@ SoFlGLWidgetP::gl_init(wxCommandEvent& )
 
 void
 SoFlGLWidgetP::gl_reshape(wxSizeEvent& event) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidgetP::gl_reshape",
                            "<%d, %d>",
                            event.GetSize().GetWidth(),
@@ -77,19 +77,19 @@ SoFlGLWidgetP::gl_reshape(wxSizeEvent& event) {
 
 void
 SoFlGLWidgetP::gl_exposed(wxCommandEvent&) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "%f", SbTime::getTimeOfDay().getValue());
 #endif
 
     if (PUBLIC(this)->waitForExpose) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
         SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "waitForExpose");
 #endif
         PUBLIC(this)->waitForExpose = false; // Gets flipped from TRUE on first expose.
         PUBLIC(this)->setSize(PUBLIC(this)->getSize());
     }
     if (this->wasresized) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
         SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "wasresized");
 #endif
         PUBLIC(this)->sizeChanged(this->glSize);
@@ -169,7 +169,7 @@ SoFlGLArea*
 SoFlGLWidgetP::buildGLWidget(void) {
 
     try {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
         SoDebugError::postInfo("SoFlGLWidgetP::buildGLWidget",
                 "%s, %s, %s, %s, %s",
                                PUBLIC(this)->isDoubleBuffer() ? "double" : "single",
@@ -179,8 +179,8 @@ SoFlGLWidgetP::buildGLWidget(void) {
                                this->hasOverlay() ? "overlay" : "no overlay");
 #endif
 
-        wxWindow *wascurrent = this->currentglwidget;
-        wxWindow *wasprevious = this->previousglwidget;
+        Fl_Window *wascurrent = this->currentglwidget;
+        Fl_Window *wasprevious = this->previousglwidget;
         SoFlGLArea *wascurrentarea = this->currentglarea;
         SoFlGLArea *waspreviousarea = this->previousglarea;
 
@@ -208,7 +208,7 @@ SoFlGLWidgetP::buildGLWidget(void) {
             this->currentglwidget = wasprevious;
             this->currentglarea = waspreviousarea;
             SoAny::si()->registerGLContext((void *) PUBLIC(this), display, screen);
-#if SOWX_DEBUG
+#if SOFL_DEBUG
                 SoDebugError::postInfo("SoFlGLWidgetP::buildGLWidget",
                                        "reused previously used GL widget");
 #endif
@@ -220,7 +220,7 @@ SoFlGLWidgetP::buildGLWidget(void) {
                     glparent,
                     gl_attributes);
 
-            // a wxPanel need a sizer, look at: https://forums.wxwidgets.org/viewtopic.php?t=44252
+            // a wxPanel need a sizer, look at: https://forums.fltk.org/viewtopic.php?t=44252
             if( SoFlGLWidgetP::isAPanel(glparent)) {
                 // new sizer remove the previous one (I'm sorry)
                 addSizer();
@@ -234,7 +234,7 @@ SoFlGLWidgetP::buildGLWidget(void) {
             delete wasprevious;
         }
 
-        if (SOWX_DEBUG) { // Warn about requested features that we didn't get.
+        if (SOFL_DEBUG) { // Warn about requested features that we didn't get.
             // TODO: QSurfaceFormat * w = this->glformat; // w(anted)
             // TODO: QSurfaceFormat g = this->currentglarea->format(); // g(ot)
 
@@ -359,8 +359,8 @@ void SoFlGLWidgetP::initGLModes(int glmodes) {
 }
 
 void
-SoFlGLWidgetP::eventHandler(wxWindow * /*widget*/ , void *closure, wxEvent &event, bool *) {
-#if SOWX_DEBUG
+SoFlGLWidgetP::eventHandler(Fl_Window * /*widget*/ , void *closure, wxEvent &event, bool *) {
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidgetP::eventHandler",
                            "");
 #endif
@@ -371,7 +371,7 @@ SoFlGLWidgetP::eventHandler(wxWindow * /*widget*/ , void *closure, wxEvent &even
 
 void
 SoFlGLWidgetP::onMouse(wxMouseEvent &event) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidgetP::onMouse",
                            "mouse event");
 #endif
@@ -380,7 +380,7 @@ SoFlGLWidgetP::onMouse(wxMouseEvent &event) {
 
 void
 SoFlGLWidgetP::onKey(wxKeyEvent &event) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidgetP::onKey",
                            "key event");
 #endif
@@ -388,7 +388,7 @@ SoFlGLWidgetP::onKey(wxKeyEvent &event) {
 }
 
 bool
-SoFlGLWidgetP::isAPanel(wxWindow* window) {
+SoFlGLWidgetP::isAPanel(Fl_Window* window) {
     return (window->IsKindOf(wxCLASSINFO(wxPanel)));
 }
 
@@ -417,7 +417,7 @@ SoFlGLWidgetP::hasZBuffer() const {
 
 bool
 SoFlGLWidgetP::hasOverlay() const {
-    SOWX_STUB();
+    SOFL_STUB();
     return (false);
 }
 

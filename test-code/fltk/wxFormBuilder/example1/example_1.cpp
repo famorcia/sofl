@@ -9,7 +9,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-AFrame::AFrame( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+AFrame::AFrame( Fl_Window* parent, Fl_WindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 

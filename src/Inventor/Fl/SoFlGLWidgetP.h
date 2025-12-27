@@ -29,17 +29,15 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXGLWIDGETP_H
-#define SOWX_SOWXGLWIDGETP_H
+#ifndef SOFL_SOFLGLWIDGETP_H
+#define SOFL_SOFLGLWIDGETP_H
 
 #include "Inventor/Fl/SoGuiGLWidgetP.h"
 #include "Inventor/Fl/SoFlGLWidget.h"
 
 #include <Inventor/SbVec2s.h>
 
-#include <fl/glcanvas.h>
-#include <fl/fl.h>
-#include <fl/timer.h>
+#include <FL/Fl_Window.H>
 
 #include <set>
 #include <vector>
@@ -63,14 +61,15 @@ public:
     SbVec2s glSizeUnscaled;
     SbBool wasresized;
 
-    wxWindow * currentglwidget;
-    wxWindow * previousglwidget;
+    Fl_Window * currentglwidget;
+    Fl_Window * previousglwidget;
     SoFlGLArea * currentglarea;
     SoFlGLArea * previousglarea;
-    wxWindow * glparent;
+    Fl_Window * glparent;
 
     int borderthickness;
 
+    /*
     const wxGLContext * oldcontext;
 
     void gl_init(wxCommandEvent&);
@@ -78,22 +77,25 @@ public:
     void gl_exposed(wxCommandEvent&);
     void onMouse(wxMouseEvent&);
     void onKey(wxKeyEvent&);
-
-    static bool isAPanel(wxWindow*);
+*/
+    static bool isAPanel(Fl_Window*);
     void addSizer();
 
     bool hasZBuffer() const;
     bool hasOverlay() const;
 
+    /*
     // Required by the common code
-    static void eventHandler(wxWindow*, void*, wxEvent&, bool*);
-
+    static void eventHandler(Fl_Window*, void*, wxEvent&, bool*);
+*/
 protected:
     virtual SbBool isDirectRendering(void);
 
+    /*
     const wxGLContext *getOverlayContext(void);
     const wxGLContext *getNormalContext(void);
+    */
 };
 
 
-#endif //SOWX_SOWXGLWIDGETP_H
+#endif //SOFL_SOFLGLWIDGETP_H

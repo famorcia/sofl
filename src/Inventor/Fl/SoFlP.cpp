@@ -38,7 +38,7 @@
 #include <Inventor/sensors/SoSensorManager.h>
 
 #include <iostream>
-#include <fl/sizer.h>
+#include <FL/sizer.h>
 #include <sstream>
 
 class SoFlApp : public  wxApp {
@@ -53,7 +53,7 @@ public:
 
     virtual void
     CleanUp()  {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
         SoDebugError::postInfo("SoFlApp::CleanUp",
                                "done!");
 #endif
@@ -67,15 +67,15 @@ SoFlP::SoFlP() {
     init = false;
     main_frame = 0;
     main_app = 0;
-    is_a_sowwp_app = false;
+    is_a_soflp_app = false;
 }
 
 void
 SoFlP::buildWxApp() {
     if(!main_app) {
-        is_a_sowwp_app = true;
+        is_a_soflp_app = true;
         setWxApp( new SoFlApp);
-    } else if (SOWX_DEBUG){
+    } else if (SOFL_DEBUG){
         SoDebugError::postWarning("SoFlP::buildWxApp",
                                "wxApp already built");
     }
@@ -95,7 +95,7 @@ class TimerQueueTimer : public wxTimer {
 public:
     virtual void
     Notify() {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
             SoDebugError::postInfo("TimerQueueTimer::Notify",
                                    "processing timer queue");
             SoDebugError::postInfo("TimerQueueTimer::Notify",
@@ -120,7 +120,7 @@ class DelayTimeoutTimer : public wxTimer {
 public:
     virtual void
     Notify() {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
             SoDebugError::postInfo("DelayTimeoutTimer::Notify",
                                    "processing delay queue");
             SoDebugError::postInfo("DelayTimeoutTimer::Notify", "is %s",
@@ -141,7 +141,7 @@ public:
 void
 SoFlP::sensorQueueChanged(void) {
     // We need three different mechanisms to interface Coin sensor
-    // handling with wxWidgets event handling, which are:
+    // handling with fltk event handling, which are:
     //
     // 1. Detect when the application is idle and then empty the
     // delay-queue completely for delay-sensors -- handled by
@@ -173,7 +173,7 @@ SoFlP::sensorQueueChanged(void) {
             // So we clamp it, to a small positive value:
             if (interval.getValue() <= 0.0) { interval.setValue(1.0 / 5000.0); }
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
                 SoDebugError::postInfo("SoFlP::sensorQueueChanged",
                     "timersensor pending, interval %f",
                     interval.getValue());
@@ -193,7 +193,7 @@ SoFlP::sensorQueueChanged(void) {
     // Set up idle notification for delay queue processing if necessary.
     if (SoFlP::delaytimeouttimer) {
         if (sm->isDelaySensorPending()) {
-            if (SOWX_DEBUG && 0) { // debug
+            if (SOFL_DEBUG && 0) { // debug
                 SoDebugError::postInfo("SoFlP::sensorQueueChanged",
                     "delaysensor pending");
             }
@@ -229,13 +229,13 @@ SoFlP::setInitialize(bool i) {
     init = i;
 }
 
-wxWindow *
+Fl_Window *
 SoFlP::getMainFrame() const {
     return (main_frame);
 }
 
 void
-SoFlP::setMainFrame(wxWindow * frame) {
+SoFlP::setMainFrame(Fl_Window * frame) {
     main_frame = frame;
 }
 
@@ -272,7 +272,7 @@ SoFlP::stopTimers() {
 
 void
 SoFlP::finish() {
-#ifdef SOWX_DEBUG
+#ifdef SOFL_DEBUG
     SoDebugError::postInfo("SoFlP::finish",
                            "remove all internal resources");
 #endif
@@ -281,7 +281,7 @@ SoFlP::finish() {
     stopTimers();
 
     // only if app is built by SoFl perform exit and cleanup
-    if(SoFlP::instance()->is_a_sowwp_app) {
+    if(SoFlP::instance()->is_a_soflp_app) {
         wxTheApp->OnExit();
         wxEntryCleanup();
     }
@@ -289,7 +289,7 @@ SoFlP::finish() {
 
 void
 SoFlP::onIdle(wxIdleEvent& WXUNUSED(event)) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlP::onIdle",
                                "idlesensor pending");
 #endif
@@ -305,7 +305,7 @@ SoFlP::onIdle(wxIdleEvent& WXUNUSED(event)) {
 
 void
 SoFlP::onClose(wxCloseEvent& event) {
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlP::onClose",
                            "clean up in progress!");
 #endif

@@ -30,15 +30,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_VIEWERSWXIDS_H
-#define SOWX_VIEWERSWXIDS_H
+#ifndef SOFL_VIEWERSWXIDS_H
+#define SOFL_VIEWERSWXIDS_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
-#include "fl/windowid.h"
+#include "FL/windowid.h"
 
-extern const wxWindowID FULL_VIEWER_P;
+extern const Fl_WindowID FULL_VIEWER_P;
 
-#endif //SOWX_VIEWERSWXIDS_H
+#endif //SOFL_VIEWERSWXIDS_H

@@ -32,7 +32,7 @@
 
 #include "Inventor/Fl/devices/SoFlInputFocus.h"
 #include "Inventor/Fl/devices/SoGuiInputFocusP.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
 #define PRIVATE(p) (p->pimpl)
 #define PUBLIC(p) (p->pub)
@@ -53,17 +53,17 @@ SoFlInputFocus::~SoFlInputFocus() {
 }
 
 void 
-SoFlInputFocus::enable(wxWindow* widget, SoFlEventHandler * handler, void * closure) {
-    SOWX_STUB();
+SoFlInputFocus::enable(Fl_Window* widget, SoFlEventHandler * handler, void * closure) {
+    SOFL_STUB();
 }
 
 void 
-SoFlInputFocus::disable(wxWindow* widget, SoFlEventHandler * handler, void * closure){
-    SOWX_STUB();
+SoFlInputFocus::disable(Fl_Window* widget, SoFlEventHandler * handler, void * closure){
+    SOFL_STUB();
 }
 
 const SoEvent * 
 SoFlInputFocus::translateEvent(wxEvent& event) {
-    SOWX_STUB();
+    SOFL_STUB();
     return (0);
 }

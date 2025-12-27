@@ -30,13 +30,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#include "fl/fl.h"
-#include <fl/glcanvas.h>
+#include "FL/fl.h"
+#include <FL/glcanvas.h>
 
 class SoFlGLArea : public wxGLCanvas
 {
 public:
-    SoFlGLArea(wxWindow *parent,
+    SoFlGLArea(Fl_Window *parent,
                wxGLAttributes& attributes)
 #if 0
             : wxGLCanvas(parent,

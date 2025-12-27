@@ -30,8 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXDIRECTIONALLIGHTEDITOR_H
-#define SOWX_SOWXDIRECTIONALLIGHTEDITOR_H
+#ifndef SOFL_SOFLDIRECTIONALLIGHTEDITOR_H
+#define SOFL_SOFLDIRECTIONALLIGHTEDITOR_H
 
 #include <Inventor/SoPath.h>
 #include <Inventor/nodes/SoDirectionalLight.h>
@@ -57,13 +57,13 @@ class _SoFlColorSlider;
 typedef void SoFlDirectionalLightEditorCB(
         void * user, const SoDirectionalLight * light);
 
-class SOWX_DLL_API SoFlDirectionalLightEditor : public SoFlComponent {
+class SOFL_DLL_API SoFlDirectionalLightEditor : public SoFlComponent {
 
-SOWX_OBJECT_HEADER(SoFlDirectionalLightEditor, SoFlComponent);
+SOFL_OBJECT_HEADER(SoFlDirectionalLightEditor, SoFlComponent);
 
 public:
     SoFlDirectionalLightEditor(
-            wxWindow* parent = NULL,
+            Fl_Window* parent = NULL,
             const char * const name = NULL,
             SbBool embed = TRUE);
     ~SoFlDirectionalLightEditor();
@@ -85,7 +85,7 @@ public:
 
 protected:
     SoFlDirectionalLightEditor(
-            wxWindow* parent,
+            Fl_Window* parent,
             const char * const name,
             SbBool embed,
             SbBool build);
@@ -117,9 +117,9 @@ protected:
     void updateLocalComponents(void);
 
 private:
-    wxWindow* buildWidget(wxWindow* parent);
+    Fl_Window* buildWidget(Fl_Window* parent);
     void constructor(SbBool build);
 
 }; // class SoFlDirectionalLightEditor
 
-#endif //SOWX_SOWXDIRECTIONALLIGHTEDITOR_H
+#endif //SOFL_SOFLDIRECTIONALLIGHTEDITOR_H

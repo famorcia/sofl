@@ -36,7 +36,7 @@
 
 #include "Inventor/Fl/devices/SoFlKeyboard.h"
 #include "SoFlKeyboardP.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
 #define PRIVATE(p) (p->pimpl)
 #define PUBLIC(p) (p->pub)
@@ -54,13 +54,13 @@ SoFlKeyboard::~SoFlKeyboard(void) {
 }
 
 void
-SoFlKeyboard::enable(wxWindow* widget, SoFlEventHandler * handler, void * closure) {
-    SOWX_STUB();
+SoFlKeyboard::enable(Fl_Window* widget, SoFlEventHandler * handler, void * closure) {
+    SOFL_STUB();
 }
 
 void
-SoFlKeyboard::disable(wxWindow* widget, SoFlEventHandler * handler, void * closure) {
-    SOWX_STUB();
+SoFlKeyboard::disable(Fl_Window* widget, SoFlEventHandler * handler, void * closure) {
+    SOFL_STUB();
 }
 
 const SoEvent *
@@ -69,7 +69,7 @@ SoFlKeyboard::translateEvent(wxEvent& event) {
     wxKeyEvent* key_event = dynamic_cast<wxKeyEvent*>(&event);
 
     if(!key_event) {
-#ifdef SOWX_DEBUG
+#ifdef SOFL_DEBUG
         SoDebugError::postWarning("SoFlKeyboard::translateEvent",
                                   "is not a key event!");
 #endif

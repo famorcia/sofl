@@ -40,19 +40,19 @@
 #include "Inventor/nodes/SoOrthographicCamera.h"
 #include "Inventor/nodes/SoPerspectiveCamera.h"
 
-#include "sowxdefs.h"
+#include "sofldefs.h"
 #include "ButtonIndexValues.h"
 
 #define PUBLIC(o) (o->pub)
 #define PRIVATE(o) (o->pimpl)
 
-wxWindow*
-SoFlPlaneViewer::buildWidget(wxWindow* parent) {
+Fl_Window*
+SoFlPlaneViewer::buildWidget(Fl_Window* parent) {
     return inherited::buildWidget(parent);
 }
 
 void
-SoFlPlaneViewer::createViewerButtons(wxWindow* parent,
+SoFlPlaneViewer::createViewerButtons(Fl_Window* parent,
                                      SbPList * buttons) {
     inherited::createViewerButtons(parent, buttons);
 
@@ -130,7 +130,7 @@ void SoFlPlaneViewerP::constructor(SbBool buildnow) {
     if (!buildnow) return;
 
     PUBLIC(this)->setSize(SbVec2s(550, 490)); // extra buttons -> more height
-    wxWindow * viewer = PUBLIC(this)->buildWidget(PUBLIC(this)->getParentWidget());
+    Fl_Window * viewer = PUBLIC(this)->buildWidget(PUBLIC(this)->getParentWidget());
     PUBLIC(this)->setBaseWidget(viewer);
 
     viewer->Bind(wxEVT_BUTTON,

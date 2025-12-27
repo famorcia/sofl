@@ -12,12 +12,12 @@ Cookbook Procedure
     For setting an installation different from /usr/local add to cmake option:
     -DCMAKE_INSTALL_PREFIX=<your installation path /usr/local is the default>
 
-    If wxWidgets is not in a default path add to cmake the option:
-    -DCMAKE_PREFIX_PATH=</path/to/wxWidgets>
+    If fltk is not in a default path add to cmake the option:
+    -DCMAKE_PREFIX_PATH=</path/to/fltk>
 
     e.g.:
-    cmake -DCMAKE_INSTALL_PREFIX=/opt/SoFl -DCMAKE_PREFIX_PATH=/opt/wxWidgets ..
-    This will install sowx in /opt/SoFl and will use the wxWidgets at /opt/wxWidgets
+    cmake -DCMAKE_INSTALL_PREFIX=/opt/SoFl -DCMAKE_PREFIX_PATH=/opt/fltk ..
+    This will install sofl in /opt/SoFl and will use the fltk at /opt/fltk
 
   4) compile and install
 

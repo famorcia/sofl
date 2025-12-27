@@ -62,17 +62,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_WHEELEVENTS_H
-#define SOWX_WHEELEVENTS_H
+#ifndef SOFL_WHEELEVENTS_H
+#define SOFL_WHEELEVENTS_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
-#include "fl/event.h"
+#include "FL/event.h"
 
 wxDECLARE_EVENT(SO_WX_MOUSE_WHEEL_PRESSED, wxCommandEvent);
 wxDECLARE_EVENT(SO_WX_MOUSE_WHEEL_RELEASED, wxCommandEvent);
 wxDECLARE_EVENT(SO_WX_MOUSE_WHEEL_MOVED, wxCommandEvent);
 
-#endif //SOWX_WHEELEVENTS_H
+#endif //SOFL_WHEELEVENTS_H

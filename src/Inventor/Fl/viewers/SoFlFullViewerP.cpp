@@ -37,11 +37,11 @@
 #include "Inventor/Fl/SoFlInternal.h"
 #include "ViewersWxIds.h"
 #include "ButtonIndexValues.h"
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
-#include <fl/gbsizer.h>
+#include <FL/gbsizer.h>
 
-const wxWindowID FULL_VIEWER_P = wxID_ANY;
+const Fl_WindowID FULL_VIEWER_P = wxID_ANY;
 
 wxBEGIN_EVENT_TABLE(SoFlFullViewerP, wxEvtHandler)
 wxEND_EVENT_TABLE()
@@ -59,13 +59,13 @@ SoFlFullViewerP::~SoFlFullViewerP() {
 }
 
 void
-SoFlFullViewerP::setThumbWheelValue(wxWindow* wheel, float val) {
+SoFlFullViewerP::setThumbWheelValue(Fl_Window* wheel, float val) {
     ((SoFlThumbWheel *)wheel)->setValue(val);
 }
 
 void
 SoFlFullViewerP::showDecorationWidgets(SbBool onOff) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlFullViewerP::showDecorationWidgets", "[invoked]");
 #endif
     // remove old one
@@ -96,7 +96,7 @@ SoFlFullViewerP::showDecorationWidgets(SbBool onOff) {
         sizer->AddGrowableCol( 1 );
         sizer->AddGrowableRow( 0 );
 
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
         dumpWindowData(PUBLIC(this)->leftDecoration);
         dumpWindowData(this->canvas);
         dumpWindowData(PUBLIC(this)->rightDecoration);
@@ -117,7 +117,7 @@ SoFlFullViewerP::showDecorationWidgets(SbBool onOff) {
     this->viewerwidget->SetSizer(this->mainlayout);
     this->viewerwidget->Layout();
 
-#if SOWX_DEBUG
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlFullViewerP::showDecorationWidgets", "dumpWindowData");
     dumpWindowData(this->viewerwidget);
 #endif
@@ -129,15 +129,15 @@ SoFlFullViewerP::showDecorationWidgets(SbBool onOff) {
 
 void
 SoFlFullViewerP::wheelPressed(wxCommandEvent& event) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlFullViewerP::wheelPressed", "event arrived!");
 #endif
-    MapEvent::iterator it = objectMap.find( static_cast<wxWindow*>(event.GetEventObject()));
+    MapEvent::iterator it = objectMap.find( static_cast<Fl_Window*>(event.GetEventObject()));
     if( it != objectMap.end() ) {
         VoidFuncNoPar function = it->second.onPress;
         (PUBLIC(this)->*function)();
     }
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     else {
         SoDebugError::postWarning("SoFlFullViewerP::wheelPressed", "not valid event found!");
     }
@@ -148,15 +148,15 @@ SoFlFullViewerP::wheelPressed(wxCommandEvent& event) {
 
 void
 SoFlFullViewerP::wheelReleased(wxCommandEvent& event) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlFullViewerP::wheelReleased", "event arrived!");
 #endif
-    MapEvent::iterator it = objectMap.find( static_cast<wxWindow*>(event.GetEventObject()));
+    MapEvent::iterator it = objectMap.find( static_cast<Fl_Window*>(event.GetEventObject()));
     if( it != objectMap.end() ) {
         VoidFuncNoPar function = it->second.onRelease;
         (PUBLIC(this)->*function)();
     }
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     else {
         SoDebugError::postWarning("SoFlFullViewerP::wheelReleased", "not valid event found!");
     }
@@ -167,10 +167,10 @@ SoFlFullViewerP::wheelReleased(wxCommandEvent& event) {
 
 void
 SoFlFullViewerP::wheelMoved(wxCommandEvent & event) {
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlFullViewerP::wheelMoved", "event arrived!");
 #endif
-    wxWindow* emitting_thumb_wheel = static_cast<wxWindow*>(event.GetEventObject());
+    Fl_Window* emitting_thumb_wheel = static_cast<Fl_Window*>(event.GetEventObject());
     MapEvent::iterator it = objectMap.find( emitting_thumb_wheel);
     if( it != objectMap.end() ) {
         VoidFuncOnePar function = it->second.onMove;
@@ -178,7 +178,7 @@ SoFlFullViewerP::wheelMoved(wxCommandEvent & event) {
         if(v)
             (PUBLIC(this)->*function)(*v);
     }
-#if SOWX_DEBUG && 0
+#if SOFL_DEBUG && 0
     else {
         SoDebugError::postWarning("SoFlFullViewerP::wheelMoved", "not valid event found!");
     }
@@ -259,7 +259,7 @@ SoFlFullViewerP::viewbuttonClicked(wxCommandEvent &) {
 
 }
 
-void SoFlFullViewerP::bindEvents(wxWindow *w) {
+void SoFlFullViewerP::bindEvents(Fl_Window *w) {
     assert(w && "window can not be null!");
     w->Bind(SO_WX_MOUSE_WHEEL_PRESSED, &SoFlFullViewerP::wheelPressed, this, FULL_VIEWER_P);
     w->Bind(SO_WX_MOUSE_WHEEL_RELEASED, &SoFlFullViewerP::wheelReleased, this, FULL_VIEWER_P);

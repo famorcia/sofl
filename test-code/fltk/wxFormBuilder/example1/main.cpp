@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#include "fl/fl.h"
+#include "FL/fl.h"
 
 #include <Inventor/Fl/SoFl.h>
 #include <Inventor/Fl/SoFlRenderArea.h>
@@ -42,7 +42,7 @@
 #include "common/get_scene_graph.h"
 #include "Inventor/Fl/viewers/SoFlExaminerViewer.h"
 
-void add_view(wxWindow* window) {
+void add_view(Fl_Window* window) {
 
     SoFl::init(window);
 

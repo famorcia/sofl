@@ -64,7 +64,7 @@ SoFlExaminerViewerP::constructor(const SbBool build) {
     PUBLIC(this)->setBottomWheelString("RotY");
 
     if (build) {
-        wxWindow *widget = PUBLIC(this)->buildWidget(PUBLIC(this)->getParentWidget());
+        Fl_Window *widget = PUBLIC(this)->buildWidget(PUBLIC(this)->getParentWidget());
         widget->Bind( wxEVT_BUTTON,
                       &SoFlExaminerViewerP::cameratoggleClicked,
                       this,

@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXPLANEVIEWERP_H
-#define SOWX_SOWXPLANEVIEWERP_H
+#ifndef SOFL_SOFLPLANEVIEWERP_H
+#define SOFL_SOFLPLANEVIEWERP_H
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
@@ -61,4 +61,4 @@ public:
 };
 
 
-#endif //SOWX_SOWXPLANEVIEWERP_H
+#endif //SOFL_SOFLPLANEVIEWERP_H

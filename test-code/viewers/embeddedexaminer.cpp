@@ -42,13 +42,13 @@
 #include <Inventor/nodes/SoCone.h>
 #include <Inventor/nodes/SoSeparator.h>
 
-#include <fl/panel.h>
-#include <fl/gdicmn.h>
-#include <fl/colour.h>
-#include <fl/string.h>
-#include <fl/splitter.h>
-#include <fl/sizer.h>
-#include <fl/frame.h>
+#include <FL/panel.h>
+#include <FL/gdicmn.h>
+#include <FL/colour.h>
+#include <FL/string.h>
+#include <FL/splitter.h>
+#include <FL/sizer.h>
+#include <FL/frame.h>
 
 class SplitFrame : public wxFrame
 {
@@ -61,8 +61,8 @@ protected:
 
 public:
 
-    SplitFrame( wxWindow* parent,
-                  wxWindowID id = wxID_ANY,
+    SplitFrame( Fl_Window* parent,
+                  Fl_WindowID id = wxID_ANY,
                   const wxString& title = wxEmptyString,
                   const wxPoint& pos = wxDefaultPosition,
                   const wxSize& size = wxSize( 500,300 ),
@@ -126,7 +126,7 @@ int
 main(int argc, char ** argv)
 {
     // Initialize SoFl.
-    SoFl::init((wxWindow *)NULL);
+    SoFl::init((Fl_Window *)NULL);
 
     // Set up scrollview window.
     SplitFrame * vp = new SplitFrame(0);

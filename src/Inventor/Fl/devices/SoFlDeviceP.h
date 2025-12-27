@@ -29,8 +29,8 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
-#ifndef SOWX_SOWXDEVICEP_H
-#define SOWX_SOWXDEVICEP_H
+#ifndef SOFL_SOFLDEVICEP_H
+#define SOFL_SOFLDEVICEP_H
 
 #include "Inventor/Fl/devices/SoGuiDeviceP.h"
 
@@ -42,4 +42,4 @@ public:
 };
 
 
-#endif //SOWX_SOWXDEVICEP_H
+#endif //SOFL_SOFLDEVICEP_H

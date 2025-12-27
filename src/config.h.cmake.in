@@ -1,7 +1,7 @@
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
 
-#ifndef SOWX_INTERNAL
+#ifndef SOFL_INTERNAL
 #error this is a private header file
 #endif
 
@@ -166,19 +166,19 @@
 #define PACKAGE_VERSION "@PACKAGE_VERSION@"
 
 /* define this to the SoQt beta version letter */
-#define SOWX_BETA_VERSION @SOWX_BETA_VERSION@
+#define SOFL_BETA_VERSION @SOFL_BETA_VERSION@
 
 /* Define to the major version of SoQt */
-#define SOWX_MAJOR_VERSION @SOWX_MAJOR_VERSION@
+#define SOFL_MAJOR_VERSION @SOFL_MAJOR_VERSION@
 
 /* Define to the micro version of SoQt */
-#define SOWX_MICRO_VERSION @SOWX_MICRO_VERSION@
+#define SOFL_MICRO_VERSION @SOFL_MICRO_VERSION@
 
 /* Define to the minor version of SoQt */
-#define SOWX_MINOR_VERSION @SOWX_MINOR_VERSION@
+#define SOFL_MINOR_VERSION @SOFL_MINOR_VERSION@
 
 /* Version string for SoQt */
-#define SOWX_VERSION "@SOWX_VERSION@"
+#define SOFL_VERSION "@SOFL_VERSION@"
 
 /* Define to 1 if you have the ANSI C header files. */
 #cmakedefine STDC_HEADERS 1
@@ -187,7 +187,7 @@
 #cmakedefine USE_EXCEPTIONS 1
 
 /* Version number of package */
-#cmakedefine VERSION "@SOWX_VERSION@"
+#cmakedefine VERSION "@SOFL_VERSION@"
 
 /* Define this if you want defaults to be linked into SoXt */
 #cmakedefine WITH_STATIC_DEFAULTS

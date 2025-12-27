@@ -5,7 +5,7 @@
 // Created:     04/01/98
 // Copyright:   (c) 2010 Kevin Ollivier, Steven Lamerton
 //              (c) 2016 Vadim Zeitlin
-// Licence:     wxWindows licence
+// Licence:     Fl_Windows licence
 /////////////////////////////////////////////////////////////////////////////
 
 // ============================================================================
@@ -16,21 +16,21 @@
 // headers
 // ----------------------------------------------------------------------------
 
-// For compilers that support precompilation, includes "fl/fl.h".
-#include "fl/wxprec.h"
+// For compilers that support precompilation, includes "FL/fl.h".
+#include "FL/wxprec.h"
 
 
 // for all others, include the necessary headers (this file is usually all you
-// need because it includes almost all "standard" wxWidgets headers)
+// need because it includes almost all "standard" fltk headers)
 #ifndef WX_PRECOMP
-#include "fl/fl.h"
+#include "FL/fl.h"
 #endif
 
 #if wxUSE_UIACTIONSIMULATOR
-#include "fl/uiaction.h"
+#include "FL/uiaction.h"
 #endif
 
-#include "fl/stopwatch.h"
+#include "FL/stopwatch.h"
 
 // ----------------------------------------------------------------------------
 // resources
@@ -234,7 +234,7 @@ void MyFrame::OnSimulateText(wxCommandEvent& WXUNUSED(event))
     const wxString text = wxGetTextFromUser
             (
                     "Enter text to simulate: ",
-                    "wxUIActionSimulator wxWidgets Sample",
+                    "wxUIActionSimulator fltk Sample",
                     s_text,
                     this
             );
@@ -258,7 +258,7 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     wxMessageBox
             (
                     "Shows how to use wxUIActionSimulator to simulate user actions",
-                    "About wxWidgets uiaction sample",
+                    "About fltk uiaction sample",
                     wxOK | wxICON_INFORMATION,
                     this
             );

@@ -41,7 +41,7 @@
 #include <Inventor/nodes/SoDirectionalLight.h>
 #include <Inventor/nodes/SoSeparator.h>
 
-#include "fl/fl.h"
+#include "FL/fl.h"
 
 #include "common/get_scene_graph.h"
 
@@ -54,7 +54,7 @@ public:
         if ( !wxApp::OnInit() )
             return false;
 
-        wxWindow* window = SoFl::init("renderarea");
+        Fl_Window* window = SoFl::init("renderarea");
 
         SoSeparator * root = new SoSeparator;
         root->ref();

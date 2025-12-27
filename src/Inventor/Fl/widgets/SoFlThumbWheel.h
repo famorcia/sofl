@@ -62,22 +62,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-#ifndef SOWX_SOWXTHUMBWHEEL_H
-#define SOWX_SOWXTHUMBWHEEL_H
+#ifndef SOFL_SOFLTHUMBWHEEL_H
+#define SOFL_SOFLTHUMBWHEEL_H
 
 #include "Inventor/Fl/SoFlBasic.h"
 #include "Inventor/Fl/widgets/SoAnyThumbWheel.h"
 
-#include <fl/panel.h>
+#include <FL/panel.h>
 
-class SOWX_DLL_API SoFlThumbWheel : public wxPanel
+class SOFL_DLL_API SoFlThumbWheel : public wxPanel
 {
 
 public:
     enum Orientation { Horizontal, Vertical };
 
-    explicit SoFlThumbWheel(wxWindow * parent = 0, const char * name = 0);
-    explicit SoFlThumbWheel(Orientation, wxWindow * parent = 0, const char * name = 0);
+    explicit SoFlThumbWheel(Fl_Window * parent = 0, const char * name = 0);
+    explicit SoFlThumbWheel(Orientation, Fl_Window * parent = 0, const char * name = 0);
     ~SoFlThumbWheel();
 
     void setOrientation(Orientation);
@@ -133,4 +133,4 @@ wxDECLARE_EVENT_TABLE();
 // *************************************************************************
 
 
-#endif //SOWX_SOWXTHUMBWHEEL_H
+#endif //SOFL_SOFLTHUMBWHEEL_H

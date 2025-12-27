@@ -7,21 +7,21 @@
 
 #pragma once
 
-#include <fl/artprov.h>
-#include <fl/xrc/xmlres.h>
-#include <fl/statusbr.h>
-#include <fl/gdicmn.h>
-#include <fl/font.h>
-#include <fl/colour.h>
-#include <fl/settings.h>
-#include <fl/string.h>
-#include <fl/bitmap.h>
-#include <fl/image.h>
-#include <fl/icon.h>
-#include <fl/menu.h>
-#include <fl/panel.h>
-#include <fl/sizer.h>
-#include <fl/frame.h>
+#include <FL/artprov.h>
+#include <FL/xrc/xmlres.h>
+#include <FL/statusbr.h>
+#include <FL/gdicmn.h>
+#include <FL/font.h>
+#include <FL/colour.h>
+#include <FL/settings.h>
+#include <FL/string.h>
+#include <FL/bitmap.h>
+#include <FL/image.h>
+#include <FL/icon.h>
+#include <FL/menu.h>
+#include <FL/panel.h>
+#include <FL/sizer.h>
+#include <FL/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +47,7 @@ class AFrame : public wxFrame
 
 	public:
 
-		AFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		AFrame( Fl_Window* parent, Fl_WindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~AFrame();
 

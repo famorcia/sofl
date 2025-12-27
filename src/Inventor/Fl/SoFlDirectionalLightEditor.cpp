@@ -32,18 +32,18 @@
 
 #include "Inventor/Fl/SoFlDirectionalLightEditor.h"
 
-#include "sowxdefs.h"
+#include "sofldefs.h"
 
-SOWX_OBJECT_SOURCE(SoFlDirectionalLightEditor);
+SOFL_OBJECT_SOURCE(SoFlDirectionalLightEditor);
 
-SoFlDirectionalLightEditor::SoFlDirectionalLightEditor(wxWindow *parent, const char *const name, SbBool embed)
+SoFlDirectionalLightEditor::SoFlDirectionalLightEditor(Fl_Window *parent, const char *const name, SbBool embed)
         : SoFlComponent(parent, name, embed) {
 
 }
 
-SoFlDirectionalLightEditor::SoFlDirectionalLightEditor(wxWindow *parent, const char *const name, SbBool embed,
+SoFlDirectionalLightEditor::SoFlDirectionalLightEditor(Fl_Window *parent, const char *const name, SbBool embed,
                                                        SbBool build) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SoFlDirectionalLightEditor::~SoFlDirectionalLightEditor() {
@@ -52,57 +52,57 @@ SoFlDirectionalLightEditor::~SoFlDirectionalLightEditor() {
 
 
 void SoFlDirectionalLightEditor::attach(SoPath *pathToLight) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void SoFlDirectionalLightEditor::detach() {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 SbBool SoFlDirectionalLightEditor::isAttached() {
-    SOWX_STUB();
+    SOFL_STUB();
     return 0;
 }
 
 void SoFlDirectionalLightEditor::setLight(const SoDirectionalLight &newLight) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 const SoDirectionalLight &SoFlDirectionalLightEditor::getLight() const {
-    SOWX_STUB();
+    SOFL_STUB();
     static SoDirectionalLight* light = 0;
     return (*light);
 }
 
 void SoFlDirectionalLightEditor::addLightChangedCallback(SoFlDirectionalLightEditorCB *f, void *userData) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void SoFlDirectionalLightEditor::removeLightChangedCallback(SoFlDirectionalLightEditorCB *f, void *userData) {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void SoFlDirectionalLightEditor::show() {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 void SoFlDirectionalLightEditor::hide() {
-    SOWX_STUB();
+    SOFL_STUB();
 }
 
 
 const char *SoFlDirectionalLightEditor::getDefaultWidgetName(void) const {
-    SOWX_STUB();
+    SOFL_STUB();
     return ("");
 }
 
 const char *SoFlDirectionalLightEditor::getDefaultTitle(void) const {
-    SOWX_STUB();
+    SOFL_STUB();
     return ("");
 }
 
 const char *SoFlDirectionalLightEditor::getDefaultIconTitle(void) const {
-    SOWX_STUB();
+    SOFL_STUB();
     return ("");
 }
 
