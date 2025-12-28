@@ -62,19 +62,21 @@ SoFlMouse::~SoFlMouse(void) {
     delete PRIVATE(this);
 }
 
-void SoFlMouse::enable(Fl_Window* widget, SoFlEventHandler * handler, void * closure)    {
+void SoFlMouse::enable(Fl_Widget* widget, SoFlEventHandler * handler, void * closure)    {
     // Nothing to do, already managed by callback in GLArea
 }
 
-void SoFlMouse::disable(Fl_Window* widget, SoFlEventHandler * handler, void * closure) {
+void SoFlMouse::disable(Fl_Widget* widget, SoFlEventHandler * handler, void * closure) {
     // Nothing to do, already managed by callback in GLArea
 }
 
-const SoEvent * SoFlMouse::translateEvent(wxEvent& event) {
+const SoEvent * SoFlMouse::translateEvent(int event) {
 
-    SoEvent * conv = NULL;
-
-    wxMouseEvent* mouse_event = dynamic_cast<wxMouseEvent*>(&event);
+    SoEvent * conv = nullptr;
+    //TODO: add behaviour
+    abort();
+    int mouse_event = 0;//dynamic_cast<wxMouseEvent*>(&event);
+#if 0
     if(!mouse_event) {
 #if SOFL_DEBUG && 0
         SoDebugError::postWarning("SoFlMouse::translateEvent",
@@ -154,6 +156,6 @@ const SoEvent * SoFlMouse::translateEvent(wxEvent& event) {
                                mouse_event->GetY());
         conv->setTime(SbTime::getTimeOfDay());
     }
-
+#endif
     return (conv);
 }
