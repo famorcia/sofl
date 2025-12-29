@@ -1,7 +1,7 @@
 /**************************************************************************\
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, Fabrizio Morciano
+ * Copyright (c) 2025, Fabrizio Morciano
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -345,6 +345,7 @@ SoFlGLWidget::sizeChanged(const SbVec2s & size){
 void
 SoFlGLWidget::widgetChanged(Fl_Widget* w){
     SOFL_STUB();
+    w->redraw();
 }
 
 #undef PRIVATE

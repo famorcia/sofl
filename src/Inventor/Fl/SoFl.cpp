@@ -1,7 +1,7 @@
 /**************************************************************************\
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, Fabrizio Morciano
+ * Copyright (c) 2025, Fabrizio Morciano
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,9 +45,6 @@ SoFl::init(int & argc,
            char ** argv,
            const char * appname,
            const char * classname) {
-
-    // retrieve the instance
-    SoFlP::instance();
 
     if (SOFL_DEBUG && SoFlP::instance()->isInitialized()) {
         SoDebugError::postWarning("SoFl::init",
@@ -209,13 +206,10 @@ SoFl::getShellWidget(const Fl_Widget* /*widget*/) {
 }
 
 void
-SoFl::setWidgetSize(Fl_Widget* const constWidget, const SbVec2s size) {
+SoFl::setWidgetSize(Fl_Widget* const widget, const SbVec2s size) {
 #if SOFL_DEBUG // debug
     SoDebugError::postInfo("SoFl::setWidgetSize","%s",__FUNCTION__);
 #endif // debug
-
-    assert(constWidget != nullptr && "widget can not be null");
-    auto widget = const_cast<Fl_Widget*>(constWidget);
     if ( widget ) {
          widget->size(size[0], size[1]);
     }
@@ -231,7 +225,6 @@ SoFl::setWidgetSize(Fl_Widget* const constWidget, const SbVec2s size) {
 
 SbVec2s
 SoFl::getWidgetSize(const Fl_Widget* widget) {
-    assert(widget != nullptr && "widget can not be null");
     SbVec2s size(-1,-1);
     if ( widget ) {
         size[0] = widget->w();

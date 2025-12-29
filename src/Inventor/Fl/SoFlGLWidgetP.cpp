@@ -1,7 +1,7 @@
 /**************************************************************************\
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, Fabrizio Morciano
+ * Copyright (c) 2025, Fabrizio Morciano
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -207,29 +207,18 @@ SoFlGLWidgetP::buildGLWidget() {
             if (this->currentglwidget) SoAny::si()->unregisterGLContext((void *) PUBLIC(this));
             this->currentglwidget = wasprevious;
             this->currentglarea = waspreviousarea;
-            SoAny::si()->registerGLContext((void *) PUBLIC(this), display, screen);
+            SoAny::si()->registerGLContext(PUBLIC(this), display, screen);
 #if SOFL_DEBUG
                 SoDebugError::postInfo("SoFlGLWidgetP::buildGLWidget",
                                        "reused previously used GL widget");
 #endif
         } else {
             if (this->currentglwidget)
-                SoAny::si()->unregisterGLContext((void *) PUBLIC(this));
+                SoAny::si()->unregisterGLContext(PUBLIC(this));
 
-            this->currentglarea = new SoFlGLArea(
-                    glparent,
-                    gl_attributes);
-
-            // a wxPanel need a sizer, look at: https://forums.fltk.org/viewtopic.php?t=44252
-            if( SoFlGLWidgetP::isAPanel(glparent)) {
-                // new sizer remove the previous one (I'm sorry)
-                addSizer();
-            }
-
+            this->currentglarea = new SoFlGLArea( glparent, gl_attributes);
             this->currentglwidget = this->currentglarea;
-            // TODO: this->currentglarea->registerQKeyEventHandler(SoFlGLWidgetP::GLAreaKeyEvent, PUBLIC(this));
-            // TODO: this->currentglwidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding));
-            SoAny::si()->registerGLContext((void *) PUBLIC(this), display, screen);
+            SoAny::si()->registerGLContext(PUBLIC(this), display, screen);
             // Send this one to the final hunting grounds.
             delete wasprevious;
         }
@@ -365,7 +354,7 @@ SoFlGLWidgetP::eventHandler(Fl_Widget * /*widget*/ , void *closure, int event, b
                            "");
 #endif
     assert(closure != nullptr);
-    SoFlGLWidget * component = ((SoFlGLWidgetP *) closure)->pub;
+    SoFlGLWidget * component = static_cast<SoFlGLWidgetP *>(closure)->pub;
     component->processEvent(event);
 }
 

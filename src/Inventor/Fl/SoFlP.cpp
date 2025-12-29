@@ -1,7 +1,7 @@
 /**************************************************************************\
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, Fabrizio Morciano
+ * Copyright (c) 2025, Fabrizio Morciano
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,13 +66,8 @@ SoGuiP::sensorQueueChanged(void *) {
 
 static void timerQueueTimerCB(void *userdata) {
 #if SOFL_DEBUG
-    SoDebugError::postInfo("TimerQueueTimer::Notify",
+    SoDebugError::postInfo("timerQueueTimerCB",
                            "processing timer queue");
-    /*
-        SoDebugError::postInfo("TimerQueueTimer::Notify",
-                               "is %s",
-                               this->IsRunning() ? "active" : "inactive");
-                               */
 #endif
 
     SoDB::getSensorManager()->processTimerQueue();
@@ -89,12 +84,8 @@ static void timerQueueTimerCB(void *userdata) {
 // starvation).
 static void delayTimeoutTimerCB(void *userdata) {
 #if SOFL_DEBUG
-    SoDebugError::postInfo("DelayTimeoutTimer::Notify",
+    SoDebugError::postInfo("delayTimeoutTimerCB",
                            "processing delay queue");
-    /*
-    SoDebugError::postInfo("DelayTimeoutTimer::Notify", "is %s",
-                           this->IsRunning() ? "active" : "inactive");
-                           */
 #endif
 
     SoDB::getSensorManager()->processTimerQueue();
