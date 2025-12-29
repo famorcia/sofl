@@ -39,32 +39,24 @@
 
 #include <FL/Fl_Window.H>
 
-#include <iostream>
-#include <sstream>
-
-/*
-wxTimer * SoFlP::timerqueuetimer = 0;
-wxTimer * SoFlP::delaytimeouttimer = 0;
-*/
 SoFlP::SoFlP() {
     init = false;
-    main_frame = 0;
-    main_app = 0;
+    main_frame = nullptr;
+    main_app = nullptr;
     is_a_soflp_app = false;
 }
 
 
 void
 SoFlP::build_fl_window() {
-    if(!main_app) {
+    if (!main_app) {
         is_a_soflp_app = true;
         main_frame = main_app = new Fl_Window(640, 480);
-    } else if (SOFL_DEBUG){
+    } else if (SOFL_DEBUG) {
         SoDebugError::postWarning("SoFlP::build_fl_window",
-                               "Fl_Window already built");
+                                  "Fl_Window already built");
     }
 }
-
 
 
 void
@@ -72,55 +64,51 @@ SoGuiP::sensorQueueChanged(void *) {
     SoFlP::instance()->sensorQueueChanged();
 }
 
-class TimerQueueTimer  {
-public:
-    virtual void
-    Notify() {
-#if SOFL_DEBUG && 0
-            SoDebugError::postInfo("TimerQueueTimer::Notify",
-                                   "processing timer queue");
-            SoDebugError::postInfo("TimerQueueTimer::Notify",
-                                   "is %s",
-                                   this->IsRunning() ?
-                                   "active" : "inactive");
+static void timerQueueTimerCB(void *userdata) {
+#if SOFL_DEBUG
+    SoDebugError::postInfo("TimerQueueTimer::Notify",
+                           "processing timer queue");
+    /*
+        SoDebugError::postInfo("TimerQueueTimer::Notify",
+                               "is %s",
+                               this->IsRunning() ? "active" : "inactive");
+                               */
 #endif
 
-        SoDB::getSensorManager()->processTimerQueue();
+    SoDB::getSensorManager()->processTimerQueue();
 
-        // The change callback is _not_ called automatically from
-        // SoSensorManager after the process methods, so we need to
-        // explicitly trigger it ourselves here.
-        SoGuiP::sensorQueueChanged(NULL);
-    }
-};
+    // The change callback is _not_ called automatically from
+    // SoSensorManager after the process methods, so we need to
+    // explicitly trigger it ourselves here.
+    SoGuiP::sensorQueueChanged(nullptr);
+}
+
 
 // The delay sensor timeout point has been reached, so process the
 // delay queue even though the system is not idle (to avoid
 // starvation).
-class DelayTimeoutTimer  {
-public:
-    virtual void
-    Notify() {
-#if SOFL_DEBUG && 0
-            SoDebugError::postInfo("DelayTimeoutTimer::Notify",
-                                   "processing delay queue");
-            SoDebugError::postInfo("DelayTimeoutTimer::Notify", "is %s",
-                                   this->IsRunning() ?
-                                   "active" : "inactive");
+static void delayTimeoutTimerCB(void *userdata) {
+#if SOFL_DEBUG
+    SoDebugError::postInfo("DelayTimeoutTimer::Notify",
+                           "processing delay queue");
+    /*
+    SoDebugError::postInfo("DelayTimeoutTimer::Notify", "is %s",
+                           this->IsRunning() ? "active" : "inactive");
+                           */
 #endif
 
-        SoDB::getSensorManager()->processTimerQueue();
-        SoDB::getSensorManager()->processDelayQueue(false);
+    SoDB::getSensorManager()->processTimerQueue();
+    SoDB::getSensorManager()->processDelayQueue(false);
 
-        // The change callback is _not_ called automatically from
-        // SoSensorManager after the process methods, so we need to
-        // explicitly trigger it ourselves here.
-        SoGuiP::sensorQueueChanged(NULL);
-    }
-};
+    // The change callback is _not_ called automatically from
+    // SoSensorManager after the process methods, so we need to
+    // explicitly trigger it ourselves here.
+    SoGuiP::sensorQueueChanged(nullptr);
+}
+
 
 void
-SoFlP::sensorQueueChanged(void) {
+SoFlP::sensorQueueChanged() {
     // We need three different mechanisms to interface Coin sensor
     // handling with fltk event handling, which are:
     //
@@ -136,13 +124,8 @@ SoFlP::sensorQueueChanged(void) {
     // continually busy applications -- handled by
     // SoFlP::delaytimeouttimer.
 
-
-    // Allocate fl timers on first call.
-    SoFlP::initTimers();
-
-    SoSensorManager * sm = SoDB::getSensorManager();
-#if 0
-    if (SoFlP::timerqueuetimer) {
+    SoSensorManager *sm = SoDB::getSensorManager();
+    if (true) {
         // Set up timer queue timeout if necessary.
         SbTime t;
         if (sm->isTimerSensorPending(t)) {
@@ -155,46 +138,42 @@ SoFlP::sensorQueueChanged(void) {
             // So we clamp it, to a small positive value:
             if (interval.getValue() <= 0.0) { interval.setValue(1.0 / 5000.0); }
 
-#if SOFL_DEBUG && 0
-                SoDebugError::postInfo("SoFlP::sensorQueueChanged",
-                    "timersensor pending, interval %f",
-                    interval.getValue());
+#if SOFL_DEBUG
+            SoDebugError::postInfo("SoFlP::sensorQueueChanged",
+                                   "timersensor pending, interval %f",
+                                   interval.getValue());
 #endif
 
             // Change interval of timerqueuetimer when head node of the
             // timer-sensor queue of SoSensorManager changes.
-            SoFlP::timerqueuetimer->Start((int)interval.getMsecValue(), true);
+            double timeout = interval.getValue();
+            Fl::add_timeout(timeout, timerQueueTimerCB, nullptr);
         }
         // Stop timerqueuetimer if queue is completely empty.
-        else if (SoFlP::timerqueuetimer->IsRunning()) {
-            SoFlP::timerqueuetimer->Stop();
+        else if (Fl::has_timeout(timerQueueTimerCB, nullptr)) {
+            Fl::remove_timeout(timerQueueTimerCB, nullptr);
         }
     }
-
 
     // Set up idle notification for delay queue processing if necessary.
-    if (SoFlP::delaytimeouttimer) {
-        if (sm->isDelaySensorPending()) {
-            if (SOFL_DEBUG && 0) { // debug
-                SoDebugError::postInfo("SoFlP::sensorQueueChanged",
-                    "delaysensor pending");
-            }
+    if (sm->isDelaySensorPending()) {
+        if (SOFL_DEBUG) {
+            // debug
+            SoDebugError::postInfo("SoFlP::sensorQueueChanged",
+                                   "delaysensor pending");
+        }
 
-            if (!SoFlP::delaytimeouttimer->IsRunning()) {
-                const SbTime& delaySensorTimeout = SoDB::getDelaySensorTimeout();
-                if (delaySensorTimeout != SbTime::zero()) {
-                    unsigned long timeout = delaySensorTimeout.getMsecValue();
-                    SoFlP::delaytimeouttimer->Start((int)timeout, true);
-                }
+        if (!Fl::has_timeout(delayTimeoutTimerCB, nullptr)) {
+            const SbTime &delaySensorTimeout = SoDB::getDelaySensorTimeout();
+            if (delaySensorTimeout != SbTime::zero()) {
+                double timeout = delaySensorTimeout.getValue();
+                Fl::add_timeout(timeout, delayTimeoutTimerCB, nullptr);
             }
         }
-        else {
-            if (SoFlP::delaytimeouttimer->IsRunning())
-                SoFlP::delaytimeouttimer->Stop();
-        }
+    } else {
+        if (Fl::has_timeout(delayTimeoutTimerCB, nullptr))
+            Fl::remove_timeout(delayTimeoutTimerCB, nullptr);
     }
-#endif
-
 }
 
 SoFlP *
@@ -219,44 +198,15 @@ SoFlP::getMainFrame() const {
 }
 
 void
-SoFlP::setMainFrame(Fl_Widget * frame) {
+SoFlP::setMainFrame(Fl_Widget *frame) {
     main_frame = frame;
 }
 
-#define INIT_TIMER(timer_name, timer_type)  \
-    if (!timer_name) {                      \
-        timer_name = new timer_type;        \
-    }                                       \
-    assert(timer_name != 0)
-
-void
-SoFlP::initTimers() {
-    static bool are_initialized = false;
-
-    if(!are_initialized) {
-#if 0
-        INIT_TIMER(SoFlP::timerqueuetimer, TimerQueueTimer);
-        INIT_TIMER(SoFlP::delaytimeouttimer, DelayTimeoutTimer);
-#endif
-
-        are_initialized = true;
-    }
-}
-
-#undef INIT_TIMER
-
-#define STOP_TIMER(timer_name) if(timer_name) timer_name->Stop()
-
 void
 SoFlP::stopTimers() {
-#if 0
-    STOP_TIMER(SoFlP::timerqueuetimer);
-    STOP_TIMER(SoFlP::delaytimeouttimer);
-#endif
-
+    Fl::remove_timeout(timerQueueTimerCB, nullptr);
+    Fl::remove_timeout(delayTimeoutTimerCB, nullptr);
 }
-
-#undef STOP_TIMER
 
 void
 SoFlP::finish() {
@@ -269,7 +219,7 @@ SoFlP::finish() {
     stopTimers();
 
     // only if app is built by SoFl perform exit and cleanup
-    if(SoFlP::instance()->is_a_soflp_app) {
+    if (SoFlP::instance()->is_a_soflp_app) {
         // wxTheApp->OnExit();
         // wxEntryCleanup();
     }
@@ -277,9 +227,9 @@ SoFlP::finish() {
 
 void
 SoFlP::onIdle(int event) {
-#if SOFL_DEBUG && 0
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlP::onIdle",
-                               "idlesensor pending");
+                           "idlesensor pending");
 #endif
 
     SoDB::getSensorManager()->processTimerQueue();
@@ -288,7 +238,7 @@ SoFlP::onIdle(int event) {
     // The change callback is _not_ called automatically from
     // SoSensorManager after the process methods, so we need to
     // explicitly trigger it ourselves here.
-    SoGuiP::sensorQueueChanged(NULL);
+    SoGuiP::sensorQueueChanged(nullptr);
 }
 
 void
@@ -306,5 +256,5 @@ SoFlP::onClose(int event) {
     // we destruct below). This could for instance happen when
     // de-coupling the scenegraph camera, triggering a notification
     // chain through the scenegraph.
-    SoDB::getSensorManager()->setChangedCallback(NULL, NULL);
+    SoDB::getSensorManager()->setChangedCallback(nullptr, nullptr);
 }

@@ -166,7 +166,7 @@ static const char eventnaming[][50] = {
 //  below has nasty sideeffects (like "random" coredumps), since the
 //  event loop might be using it
 SoFlGLArea*
-SoFlGLWidgetP::buildGLWidget(void) {
+SoFlGLWidgetP::buildGLWidget() {
 
     try {
 #if SOFL_DEBUG
@@ -309,7 +309,7 @@ SoFlGLWidgetP::buildGLWidget(void) {
 
 // Returns the normal GL context.
 const GLContext
-SoFlGLWidgetP::getNormalContext(void) {
+SoFlGLWidgetP::getNormalContext() {
     SoFlGLArea * w = this->currentglarea;
     if (w) return w->context();
     return nullptr;
@@ -317,14 +317,14 @@ SoFlGLWidgetP::getNormalContext(void) {
 
 // Returns the overlay GL context.
 const GLContext
-SoFlGLWidgetP::getOverlayContext(void) {
+SoFlGLWidgetP::getOverlayContext() {
     SoFlGLArea * w = this->currentglarea;
     // TODO: if (w) { return QGLWidget_overlayContext(w); }
     return nullptr;
 }
 
 SbBool
-SoFlGLWidgetP::isDirectRendering(void) {
+SoFlGLWidgetP::isDirectRendering() {
     SbBool res = FALSE;
     //TODO: if(this->currentglarea && this->currentglarea->GetGLCTXAttrs().x11Direct)
         res = TRUE;

@@ -37,34 +37,28 @@
 #include <map>
 
 SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
-                       const std::vector<int>& attributes)
-        : Fl_Gl_Window(parent->x(),
-            parent->y(),
-            parent->w(),
-            parent->h()
-            /*TODO*/) {
-
-    // this->SetName("SoFlGLArea");
-
-    gl_real_context = this->context();
+                       const std::vector<int> &attributes)
+    : Fl_Gl_Window(parent->x(),
+                   parent->y(),
+                   parent->w(),
+                   parent->h()) {
+    mode(&attributes[0]);
+    this->label("SoFlGLArea");
     is_gl_initialized = false;
     gl_format = attributes;
 }
 
-
 SoFlGLArea::~SoFlGLArea() {
-    // delete gl_real_context;
 }
 
 void SoFlGLArea::draw() {
 #if SOFL_DEBUG
-    SoDebugError::postInfo("SoFlGLArea::OnPaint",
+    SoDebugError::postInfo("SoFlGLArea::draw",
                            "size:%d %d",
                            w(),
                            h());
 #endif
     if (!valid()) {
-
     }
     InitGL();
 }
@@ -75,25 +69,23 @@ int SoFlGLArea::handle(int event) {
 
 
 void SoFlGLArea::InitGL() {
-    if(!is_gl_initialized) {
-        //SetCurrent(*gl_real_context);
+    if (!is_gl_initialized) {
         is_gl_initialized = true;
-
-    } else {
-//        SetCurrent(*gl_real_context);
+        this->make_current();
+        gl_real_context = this->context();
+        assert(gl_real_context != nullptr);
     }
 }
 
 void SoFlGLArea::makeCurrent() {
-  //  if(gl_real_context)
-  //      SetCurrent(*gl_real_context);
+    this->make_current();
 }
 
 #if 0
 bool
 isBoolean(int value) {
     bool res = false;
-    switch(value ) {
+    switch (value) {
         case WX_GL_RGBA:
         case WX_GL_DOUBLEBUFFER:
         case WX_GL_STEREO:
@@ -114,19 +106,16 @@ SoFlGLArea::areEqual(const SoFlGLArea::GLFormat &format1,
 }
 #if 0
 bool ConvertWXAttrsWxGLFormat(const int *wxattrs,
-                              SoFlGLArea::GLFormat  &format)
-{
+                              SoFlGLArea::GLFormat &format) {
     if (!wxattrs)
         return true;
 
-    for ( int arg = 0; wxattrs[arg] != 0; arg++ )
-    {
+    for (int arg = 0; wxattrs[arg] != 0; arg++) {
         // indicates whether we have a boolean attribute
         bool isBoolAttr = false;
 
-        int v = wxattrs[arg+1];
-        switch ( wxattrs[arg] )
-        {
+        int v = wxattrs[arg + 1];
+        switch (wxattrs[arg]) {
             case WX_GL_BUFFER_SIZE:
                 //format.setRgba(false);
                 format.push_back(WX_GL_BUFFER_SIZE);
@@ -163,7 +152,7 @@ bool ConvertWXAttrsWxGLFormat(const int *wxattrs,
                 return false;
 
             case WX_GL_MIN_RED:
-                format[WX_GL_MIN_RED] = v*8;
+                format[WX_GL_MIN_RED] = v * 8;
                 // format.setRedBufferSize(v*8);
                 break;
 
@@ -229,8 +218,8 @@ bool ConvertWXAttrsWxGLFormat(const int *wxattrs,
                 continue;
         }
 
-        if ( !isBoolAttr ) {
-            if ( !v )
+        if (!isBoolAttr) {
+            if (!v)
                 return false; // zero parameter
             arg++;
         }

@@ -50,7 +50,6 @@ public:
     SoFlP();
     bool is_a_soflp_app;
 
-    static void initTimers();
     static void stopTimers();
 
     static SoFlP* instance();

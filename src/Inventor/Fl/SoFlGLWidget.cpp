@@ -96,14 +96,14 @@ SoFlGLWidget::setQuadBufferStereo(const SbBool enable) {
 }
 
 SbBool
-SoFlGLWidget::isQuadBufferStereo(void) const {
+SoFlGLWidget::isQuadBufferStereo() const {
     return (FALSE);
 }
 
 void
 SoFlGLWidget::setGLSize(const SbVec2s size){
     if (size == PRIVATE(this)->glSize) return;
-#if SOFL_DEBUG && 0
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::setGLSize",
                            "[invoked (%d, %d)]", size[0], size[1]);
 #endif // debug
@@ -111,26 +111,26 @@ SoFlGLWidget::setGLSize(const SbVec2s size){
     PRIVATE(this)->glSizeUnscaled = size;
     if (PRIVATE(this)->currentglwidget) {
         int frame = this->isBorder() ? PRIVATE(this)->borderthickness : 0;
-        // PRIVATE(this)->currentglwidget->SetSize( size[0], size[1] );
+        PRIVATE(this)->currentglwidget->size( size[0], size[1] );
     }
 }
 
 
 SbVec2s
-SoFlGLWidget::getGLSize(void) const{
+SoFlGLWidget::getGLSize() const{
     return (PRIVATE(this)->glSize);
 }
 
 float
-SoFlGLWidget::getGLAspectRatio(void) const{
+SoFlGLWidget::getGLAspectRatio() const{
     SbVec2f v2(PRIVATE(this)->currentglwidget->w(), PRIVATE(this)->currentglwidget->h());
     return ( v2[0] /v2[1] );
 }
 
 SbBool
-SoFlGLWidget::isRGBMode(void){
-    const bool rgb_mode = false; // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes, WX_GL_RGBA);
-#if SOFL_DEBUG && 0
+SoFlGLWidget::isRGBMode(){
+    constexpr bool rgb_mode = false; // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes, WX_GL_RGBA);
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::isRGBMode",
                            ": %d",
                            rgb_mode);
@@ -139,44 +139,44 @@ SoFlGLWidget::isRGBMode(void){
 }
 
 void
-SoFlGLWidget::glLockNormal(void){
+SoFlGLWidget::glLockNormal(){
     assert(PRIVATE(this)->currentglarea != nullptr);
     PRIVATE(this)->currentglarea->makeCurrent();
 }
 
 void
-SoFlGLWidget::glUnlockNormal(void){
+SoFlGLWidget::glUnlockNormal(){
     // do nothing
 }
 
 void
-SoFlGLWidget::glLockOverlay(void){
+SoFlGLWidget::glLockOverlay(){
     SOFL_STUB();
 }
 
 void
-SoFlGLWidget::glUnlockOverlay(void){
+SoFlGLWidget::glUnlockOverlay(){
     SOFL_STUB();
 }
 
 void
-SoFlGLWidget::glSwapBuffers(void){
+SoFlGLWidget::glSwapBuffers(){
     PRIVATE(this)->currentglarea->swap_buffers();
 }
 
 void
-SoFlGLWidget::glFlushBuffer(void){
+SoFlGLWidget::glFlushBuffer(){
     glFlush();
 }
 
 SbBool
-SoFlGLWidget::glScheduleRedraw(void){
+SoFlGLWidget::glScheduleRedraw(){
     SOFL_STUB();
     return (TRUE);
 }
 
 SbBool
-SoFlGLWidget::isBorder(void) const{
+SoFlGLWidget::isBorder() const{
     return (PRIVATE(this)->borderthickness ? true : false);
 }
 
@@ -186,9 +186,9 @@ SoFlGLWidget::setDoubleBuffer(const SbBool enable){
 }
 
 SbBool
-SoFlGLWidget::isDoubleBuffer(void) const{
+SoFlGLWidget::isDoubleBuffer() const{
     const bool double_buffer = false; // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes,WX_GL_DOUBLEBUFFER);
-#if SOFL_DEBUG && 0
+#if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::isDoubleBuffer",
                            ": %d",
                            double_buffer);
@@ -202,7 +202,7 @@ SoFlGLWidget::setDrawToFrontBufferEnable(const SbBool enable){
 }
 
 SbBool
-SoFlGLWidget::isDrawToFrontBufferEnable(void) const{
+SoFlGLWidget::isDrawToFrontBufferEnable() const{
     return (drawToFrontBuffer);
 }
 
@@ -212,7 +212,7 @@ SoFlGLWidget::setAccumulationBuffer(const SbBool enable){
 }
 
 SbBool
-SoFlGLWidget::getAccumulationBuffer(void) const{
+SoFlGLWidget::getAccumulationBuffer() const{
     SOFL_STUB();
     return (FALSE);
 }
@@ -223,7 +223,7 @@ SoFlGLWidget::setStencilBuffer(const SbBool enable){
 }
 
 SbBool
-SoFlGLWidget::getStencilBuffer(void) const{
+SoFlGLWidget::getStencilBuffer() const{
     SOFL_STUB();
     return (FALSE);
 }
@@ -234,7 +234,7 @@ SoFlGLWidget::setAlphaChannel(const SbBool enable){
 }
 
 SbBool
-SoFlGLWidget::getAlphaChannel(void) const{
+SoFlGLWidget::getAlphaChannel() const{
     SOFL_STUB();
     return (FALSE);
 }
@@ -245,7 +245,7 @@ SoFlGLWidget::setOverlayRender(const SbBool onoff){
 }
 
 SbBool
-SoFlGLWidget::isOverlayRender(void) const{
+SoFlGLWidget::isOverlayRender() const{
     SOFL_STUB();
     return (FALSE);
 }
@@ -256,42 +256,43 @@ SoFlGLWidget::setSampleBuffers(const int numsamples){
 }
 
 int
-SoFlGLWidget::getSampleBuffers(void) const{
+SoFlGLWidget::getSampleBuffers() const{
     SOFL_STUB();
     return (0);
 }
 
 Fl_Widget*
-SoFlGLWidget::getGLWidget(void) const{
+SoFlGLWidget::getGLWidget() const{
     return (PRIVATE(this)->currentglwidget);
 }
 
 Fl_Widget*
-SoFlGLWidget::getNormalWidget(void) const{
+SoFlGLWidget::getNormalWidget() const{
     SOFL_STUB();
-    return (0);
+    return (nullptr);
 }
 
 Fl_Widget*
-SoFlGLWidget::getOverlayWidget(void) const{
+SoFlGLWidget::getOverlayWidget() const{
     SOFL_STUB();
-    return (0);
+    return (nullptr);
 }
 
 SbBool
-SoFlGLWidget::hasOverlayGLArea(void) const{
+SoFlGLWidget::hasOverlayGLArea() const{
     SOFL_STUB();
     return (false);
 }
 
 SbBool
-SoFlGLWidget::hasNormalGLArea(void) const{
-    bool res = (PRIVATE(this)->currentglarea->context() != 0);
+SoFlGLWidget::hasNormalGLArea() const{
+    const auto context = PRIVATE(this)->currentglarea->context();
+    const bool res = ( context != nullptr);
     return (res);
 }
 
 unsigned long
-SoFlGLWidget::getOverlayTransparentPixel(void){
+SoFlGLWidget::getOverlayTransparentPixel(){
     SOFL_STUB();
     return (0);
 }
@@ -305,18 +306,18 @@ SoFlGLWidget::processEvent(int event){
 
 Fl_Widget *
 SoFlGLWidget::buildWidget(Fl_Widget* parent) {
-    assert(parent !=0 && "parent can not be null");
+    assert(parent != nullptr && "parent can not be null");
     PRIVATE(this)->glparent = parent;
     return (PRIVATE(this)->buildGLWidget());
 }
 
 void
-SoFlGLWidget::redrawOverlay(void){
+SoFlGLWidget::redrawOverlay(){
     SOFL_STUB();
 }
 
 void
-SoFlGLWidget::initGraphic(void){
+SoFlGLWidget::initGraphic(){
     this->glLockNormal();
     // Need to set this explicitly when running on top of Open Inventor,
     // as it seems to have been forgotten there.
@@ -325,7 +326,7 @@ SoFlGLWidget::initGraphic(void){
     this->glUnlockNormal();
 }
 void
-SoFlGLWidget::initOverlayGraphic(void){
+SoFlGLWidget::initOverlayGraphic(){
     SOFL_STUB();
 }
 

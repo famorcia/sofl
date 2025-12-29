@@ -33,10 +33,17 @@
 #include "Inventor/Fl/SoFlInternal.h"
 
 #include <sstream>
-
+#include <FL/Fl_Widget.H>
 
 
 std::string
 dumpWindowData(const Fl_Widget* window) {
-    return ("TODO!!!");
+    if(window == nullptr) return "null widget!!!";
+    std::ostringstream oss;
+    oss<<"title:"<<window->label()<<","
+        <<"x:"<<window->x()<<","
+    <<"y:"<<window->y()<<","
+    <<"w:"<<window->w()<<","
+    <<"h:"<<window->h();
+    return oss.str();
 }

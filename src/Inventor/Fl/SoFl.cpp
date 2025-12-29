@@ -151,15 +151,15 @@ SoFl::init(Fl_Widget* toplevelwidget) {
  * (embedded in already existing window).
  */
 void
-SoFl::mainLoop(void) {
-    // wxTheApp->OnRun();
+SoFl::mainLoop() {
+    SoFlP::instance()->main_app->end();
     Fl::run();
 }
 
 
 void
-SoFl::exitMainLoop(void)  {
-    // wxExit();
+SoFl::exitMainLoop()  {
+    Fl::program_should_quit();
 }
 
 void
@@ -175,6 +175,7 @@ SoFl::done() {
 
 void
 SoFl::show(Fl_Widget* const widget) {
+    assert(widget != nullptr && "widget can not be null");
     widget->show();
 }
 
@@ -192,26 +193,31 @@ SoFl::createSimpleErrorDialog(Fl_Widget* widget,
 }
 
 Fl_Widget*
-getTopLevelWidget(void) {
-    return (nullptr);
+getTopLevelWidget() {
+#if SOFL_DEBUG // debug
+    SoDebugError::postInfo("SoFl::getTopLevelWidget","%s",__FUNCTION__);
+#endif // debug
+    return (Fl::first_window());
 }
 
 Fl_Widget*
-SoFl::getShellWidget(const Fl_Widget* w) {
-    return (Fl::first_window());
-
-#if SOFL_DEBUG && 0 // debug
-    SoDebugError::postInfo("SoFl::getShellWidget",
-                         "couldn't find shell for widget at %p", widget);
+SoFl::getShellWidget(const Fl_Widget* /*widget*/) {
+#if SOFL_DEBUG // debug
+    SoDebugError::postInfo("SoFl::getShellWidget","%s",__FUNCTION__);
 #endif // debug
-    return (nullptr);
+    return (Fl::first_window());
 }
 
 void
-SoFl::setWidgetSize(Fl_Widget* const widget, const SbVec2s size) {
-    assert(widget != 0 && "widget can not be null");
+SoFl::setWidgetSize(Fl_Widget* const constWidget, const SbVec2s size) {
+#if SOFL_DEBUG // debug
+    SoDebugError::postInfo("SoFl::setWidgetSize","%s",__FUNCTION__);
+#endif // debug
+
+    assert(constWidget != nullptr && "widget can not be null");
+    auto widget = const_cast<Fl_Widget*>(constWidget);
     if ( widget ) {
-        // widget->w() = sSetSize(size[0], size[1]);
+         widget->size(size[0], size[1]);
     }
 #if SOFL_DEBUG
     else  {
