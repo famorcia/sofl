@@ -32,9 +32,10 @@
 
 #include "Inventor/Fl/widgets/SoFlGLArea.h"
 #include "Inventor/Fl/SoFlGLWidgetP.h"
+#include <Inventor/errors/SoDebugError.h>
+
 #include "sofldefs.h"
 
-#include <iostream>
 
 SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
                        SoFlGLWidgetP *parentW,
