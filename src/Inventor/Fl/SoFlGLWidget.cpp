@@ -118,7 +118,6 @@ SoFlGLWidget::setGLSize(const SbVec2s size) {
 
 SbVec2s
 SoFlGLWidget::getGLSize() const {
-    SOFL_STUB();
     return (PRIVATE(this)->glSize);
 }
 
@@ -132,7 +131,7 @@ SoFlGLWidget::getGLAspectRatio() const {
 SbBool
 SoFlGLWidget::isRGBMode() {
     SOFL_STUB();
-    constexpr bool rgb_mode = false; // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes, WX_GL_RGBA);
+    constexpr bool rgb_mode = true; // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes, WX_GL_RGBA);
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::isRGBMode",
                            ": %d",
@@ -143,14 +142,12 @@ SoFlGLWidget::isRGBMode() {
 
 void
 SoFlGLWidget::glLockNormal() {
-    SOFL_STUB();
     assert(PRIVATE(this)->currentglarea != nullptr);
     PRIVATE(this)->currentglarea->makeCurrent();
 }
 
 void
 SoFlGLWidget::glUnlockNormal() {
-    SOFL_STUB();
     // do nothing
 }
 
@@ -196,7 +193,6 @@ SoFlGLWidget::setDoubleBuffer(const SbBool enable) {
 SbBool
 SoFlGLWidget::isDoubleBuffer() const {
     SOFL_STUB();
-
     // TODO: add GL_modes
     auto v  = PRIVATE(this)->gl_attributes;
     const auto double_buffer = true; // static_cast<bool>(mode & FL_DOUBLE);
@@ -277,7 +273,6 @@ SoFlGLWidget::getSampleBuffers() const {
 
 Fl_Widget *
 SoFlGLWidget::getGLWidget() const {
-    SOFL_STUB();
     return (PRIVATE(this)->currentglwidget);
 }
 
@@ -301,7 +296,6 @@ SoFlGLWidget::hasOverlayGLArea() const {
 
 SbBool
 SoFlGLWidget::hasNormalGLArea() const {
-    SOFL_STUB();
     const auto context = PRIVATE(this)->currentglarea->context();
     const bool res = (context != nullptr);
     return (res);
@@ -315,7 +309,6 @@ SoFlGLWidget::getOverlayTransparentPixel() {
 
 void
 SoFlGLWidget::processEvent(int event) {
-    SOFL_STUB();
     // Nothing is done here for the SoFlGLWidget, as realize, resize and
     // expose events are caught by explicitly attaching signal callbacks
     // to the widget.
@@ -323,7 +316,6 @@ SoFlGLWidget::processEvent(int event) {
 
 Fl_Widget *
 SoFlGLWidget::buildWidget(Fl_Widget *parent) {
-    SOFL_STUB();
     assert(parent != nullptr && "parent can not be null");
     PRIVATE(this)->glparent = parent;
     return (PRIVATE(this)->buildGLWidget());
@@ -337,12 +329,14 @@ SoFlGLWidget::redrawOverlay() {
 void
 SoFlGLWidget::initGraphic() {
     SOFL_STUB();
+    /*
     this->glLockNormal();
     // Need to set this explicitly when running on top of Open Inventor,
     // as it seems to have been forgotten there.
     // This code should be invoked from SoFlRenderArea::initGraphics()
     glEnable(GL_DEPTH_TEST);
     this->glUnlockNormal();
+    */
 }
 
 void

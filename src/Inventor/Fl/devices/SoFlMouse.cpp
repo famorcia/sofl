@@ -34,6 +34,7 @@
 #include <config.h>
 #endif // HAVE_CONFIG_H
 
+#include <iostream>
 #include <Inventor/errors/SoDebugError.h>
 #include <Inventor/events/SoLocation2Event.h>
 #include <Inventor/events/SoMouseButtonEvent.h>
@@ -47,13 +48,11 @@
 
 class SoFlMouseP : public SoGuiMouseP {
 public:
-    SoFlMouseP(SoFlMouse * p) : SoGuiMouseP(p) { }
-
-    //SoLocation2Event * makeLocationEvent(XMotionEvent * event);
-    //SoMouseButtonEvent * makeButtonEvent(XButtonEvent * event, SoButtonEvent::State state);
+    SoFlMouseP(SoFlMouse *p) : SoGuiMouseP(p) {
+    }
 };
 
-SoFlMouse::SoFlMouse(int mask ) {
+SoFlMouse::SoFlMouse(int mask) {
     PRIVATE(this) = new SoFlMouseP(this);
     PRIVATE(this)->eventmask = mask;
 }
@@ -62,58 +61,123 @@ SoFlMouse::~SoFlMouse(void) {
     delete PRIVATE(this);
 }
 
-void SoFlMouse::enable(Fl_Widget* widget, SoFlEventHandler * handler, void * closure)    {
+void SoFlMouse::enable(Fl_Widget *widget, SoFlEventHandler *handler, void *closure) {
     // Nothing to do, already managed by callback in GLArea
 }
 
-void SoFlMouse::disable(Fl_Widget* widget, SoFlEventHandler * handler, void * closure) {
+void SoFlMouse::disable(Fl_Widget *widget, SoFlEventHandler *handler, void *closure) {
     // Nothing to do, already managed by callback in GLArea
 }
 
-const SoEvent * SoFlMouse::translateEvent(int event) {
-
-    SoEvent * conv = nullptr;
-    //TODO: add behaviour
-    abort();
-    int mouse_event = 0;//dynamic_cast<wxMouseEvent*>(&event);
+const SoEvent *SoFlMouse::translateEvent(int event) {
+    SoEvent *conv = nullptr;
 #if 0
-    if(!mouse_event) {
-#if SOFL_DEBUG && 0
-        SoDebugError::postWarning("SoFlMouse::translateEvent",
-                                  "is not a mouse event!");
-#endif
-        return (conv);
+    switch (event) {
+        case FL_KEYBOARD:
+            widget_p->onKey(event);
+            break;
+        case FL_PUSH: // Click del mouse
+            std::cout << "Tasto premuto: " << Fl::event_button()
+                    << " a coordinate: (" << Fl::event_x() << "," << Fl::event_y() << ")" << std::endl;
+            widget_p->onMouse(event);
+            return 1; // Ritorna 1 per dire che l'evento è stato gestito
+
+        case FL_DRAG: // Trascinamento
+        case FL_MOVE: // Movimento semplice
+            widget_p->onMouse(event);
+            std::cout << "Trascinamento: " << Fl::event_button()
+                    << " a coordinate: (" << Fl::event_x() << "," << Fl::event_y() << ")" << std::endl;
+            return 1;
+
+        case FL_ENTER: // Il mouse entra nel widget
+            std::cout << "Il mouse entra nel widget: " << Fl::event_button()
+                    << " a coordinate: (" << Fl::event_x() << "," << Fl::event_y() << ")" << std::endl;
+            return 1;
+
+        case FL_LEAVE: // Il mouse esce dal widget
+            std::cout << "Il mouse esce dal widget: " << Fl::event_button()
+                    << " a coordinate: (" << Fl::event_x() << "," << Fl::event_y() << ")" << std::endl;
+            return 1;
+        default:
+            break;
     }
-     bool isWheelInverted = false;
-     //TODO: mouse_event->IsWheelInverted()
+
+    if (!mouse_event) {
+#if SOFL_DEBUG && 0
+    SoDebugError::postWarning("SoFlMouse::translateEvent",
+                              "is not a mouse event!");
+#endif
+    return (conv);
+    }
+#endif
+
+    bool isWheelInverted = false;
+    //TODO: mouse_event->IsWheelInverted()
     // Convert wheel mouse events to Coin SoMouseButtonEvents.
-#ifdef HAVE_SOMOUSEBUTTONEVENT_BUTTON5
+#ifdef HAVE_SOMOUSEBUTTONEVENT_BUTTON5_TODO
     if (mouse_event->GetWheelRotation() > 0)
-        PRIVATE(this)->buttonevent->setButton(isWheelInverted ?
-                                              SoMouseButtonEvent::BUTTON5 :
-                                              SoMouseButtonEvent::BUTTON4);
+        PRIVATE(this)->buttonevent->setButton(isWheelInverted
+                                                  ? SoMouseButtonEvent::BUTTON5
+                                                  : SoMouseButtonEvent::BUTTON4);
     else if (mouse_event->GetWheelRotation() < 0)
-        PRIVATE(this)->buttonevent->setButton(isWheelInverted ?
-                                              SoMouseButtonEvent::BUTTON4 :
-                                              SoMouseButtonEvent::BUTTON5);
+        PRIVATE(this)->buttonevent->setButton(isWheelInverted
+                                                  ? SoMouseButtonEvent::BUTTON4
+                                                  : SoMouseButtonEvent::BUTTON5);
 
     PRIVATE(this)->buttonevent->setState(SoButtonEvent::DOWN);
     conv = PRIVATE(this)->buttonevent;
 
 #endif // HAVE_SOMOUSEBUTTONEVENT_BUTTON5
 
-// Check for mousebutton press/release. Note that mousebutton
-// doubleclick events are handled by converting them to two
-// press/release events. In other words: it's the user's
-// responsibility to translate pairs of singleclicks to
-// doubleclicks, if doubleclicks have a special meaning in the
-// application.
+    // Check for mousebutton press/release. Note that mousebutton
+    // doubleclick events are handled by converting them to two
+    // press/release events. In other words: it's the user's
+    // responsibility to translate pairs of singleclicks to
+    // doubleclicks, if doubleclicks have a special meaning in the
+    // application.
 
+    switch (event) {
+        case FL_PUSH:
+            std::cout << "Tasto premuto: " << Fl::event_button()<<std::endl;
+            if (PRIVATE(this)->eventmask & BUTTON_PRESS) {
+                std::cout << "Evento : BUTTON_PRESS" << Fl::event_button()<<std::endl;
+                PRIVATE(this)->buttonevent->setState(SoButtonEvent::DOWN);
+                switch (Fl::event_button()) {
+                    case FL_LEFT_MOUSE:
+                        PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::BUTTON1);
+                        std::cout << "Evento : SoMouseButtonEvent::BUTTON1" <<std::endl;
+                        break;
+                    case FL_RIGHT_MOUSE: PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::BUTTON2);
+                        std::cout << "Evento : SoMouseButtonEvent::BUTTON2" <<std::endl;
+                        break;
+                    case FL_MIDDLE_MOUSE: PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::BUTTON3);
+                        std::cout << "Evento : SoMouseButtonEvent::BUTTON3" <<std::endl;
+                        break;
+                    default: PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::ANY);
+                        std::cout << "Evento : SoMouseButtonEvent::ANY" <<std::endl;
+                        break;
+                }
+                conv = PRIVATE(this)->buttonevent;
+            }
+            break;
+        case FL_RELEASE:
+                std::cout << "Tasto alzato PRIMA!!!!: " << Fl::event_button()<<std::endl;
+            if (PRIVATE(this)->eventmask & BUTTON_RELEASE) {
+                std::cout << "Tasto alzato: " << Fl::event_button()<<std::endl;
+                PRIVATE(this)->buttonevent->setState(SoButtonEvent::UP);
+                conv = PRIVATE(this)->buttonevent;
+            }
+            break;
+        case FL_DRAG:
+            conv = PRIVATE(this)->locationevent;
+            break;
+        default: break;
+    }
+#if 0
     if (((mouse_event->ButtonDClick()) ||
          (mouse_event->ButtonDown()) ||
          (mouse_event->ButtonUp())) &&
         (PRIVATE(this)->eventmask & (BUTTON_PRESS | BUTTON_RELEASE))) {
-
         // Which button?
         switch (mouse_event->GetButton()) {
             case wxMOUSE_BTN_LEFT:
@@ -146,16 +210,18 @@ const SoEvent * SoFlMouse::translateEvent(int event) {
         conv = PRIVATE(this)->locationevent;
     }
 
+#endif
+
     // Common settings for SoEvent superclass.
     if (conv) {
-        conv->setShiftDown(mouse_event->ShiftDown());
-        conv->setCtrlDown(mouse_event->ControlDown());
-        conv->setAltDown(mouse_event->AltDown());
+        conv->setShiftDown(Fl::event_shift());
+        conv->setCtrlDown(Fl::event_ctrl());
+        conv->setAltDown(Fl::event_alt());
         this->setEventPosition(conv,
-                               mouse_event->GetX(),
-                               mouse_event->GetY());
+                               Fl::event_x(),
+                               Fl::event_y());
         conv->setTime(SbTime::getTimeOfDay());
     }
-#endif
+
     return (conv);
 }

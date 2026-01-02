@@ -34,20 +34,18 @@
 #include "Inventor/Fl/SoFlGLWidgetP.h"
 #include "sofldefs.h"
 
-#include <map>
-#include <GL/gl.h>
+#include <iostream>
 
 SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
-    SoFlGLWidgetP* parentW,
+                       SoFlGLWidgetP *parentW,
                        const std::vector<int> &attributes)
     : Fl_Gl_Window(parent->x(),
                    parent->y(),
                    parent->w(),
-                   parent->h()),widget_p(parentW){
-    SOFL_STUB();
-
+                   parent->h()), widget_p(parentW) {
     mode(&attributes[0]);
     this->label("SoFlGLArea");
+    gl_real_context = nullptr;
     is_gl_initialized = false;
     gl_format = attributes;
 }
@@ -82,16 +80,6 @@ void SoFlGLArea::draw() {
                                "%s",
                                "!context_valid()");
 #endif
-      }
-
-    glClear(GL_DEPTH_BUFFER_BIT);
-    static bool onOff= true;
-    if (onOff) {
-        onOff= false;
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    } else {
-        onOff= true;
-        glClearColor(1,1,1,0);
     }
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLArea::draw",
@@ -102,13 +90,34 @@ void SoFlGLArea::draw() {
 }
 
 int SoFlGLArea::handle(int event) {
-    SOFL_STUB();
-    // this->redraw();
-    return Fl_Gl_Window::handle(event);
+#if SOFL_DEBUG && 0
+    SoDebugError::postInfo("SoFlGLArea::handle",
+                           "event: %d",
+                           event);
+#endif
+    switch (event) {
+        case FL_KEYBOARD:
+            widget_p->onKey(event);
+            return 1;
+        case FL_PUSH:
+        case FL_RELEASE:
+            widget_p->onMouse(event);
+            return 1;
+        case FL_DRAG:
+        case FL_MOVE:
+            widget_p->onMouse(event);
+            return 1;
+        case FL_ENTER:
+            return 1;
+        case FL_LEAVE:
+            return 1;
+        default:
+            break;
+    }
+    return Fl_Gl_Window::handle(event); // pass other events to base class
 }
 
 void SoFlGLArea::InitGL() {
-    SOFL_STUB();
     if (!is_gl_initialized) {
         is_gl_initialized = true;
         this->make_current();
@@ -118,6 +127,5 @@ void SoFlGLArea::InitGL() {
 }
 
 void SoFlGLArea::makeCurrent() {
-    SOFL_STUB();
     this->make_current();
 }

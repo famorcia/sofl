@@ -75,6 +75,7 @@ public:
     void gl_reshape(int);
     void gl_exposed(int);
     void onMouse(int);
+    // void onDrag(int button, int x, int y);
     void onKey(int);
 
     static bool isAPanel(Fl_Widget*);
@@ -82,7 +83,6 @@ public:
 
     bool hasZBuffer() const;
     bool hasOverlay() const;
-
 
     // Required by the common code
     static void eventHandler(Fl_Widget*, void*, int, bool*);

@@ -81,19 +81,19 @@ SoFlGLWidgetP::gl_reshape(int event) {
 void
 SoFlGLWidgetP::gl_exposed(int) {
     SOFL_STUB();
-#if SOFL_DEBUG
+#if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "%f", SbTime::getTimeOfDay().getValue());
 #endif
 
     if (PUBLIC(this)->waitForExpose) {
-#if SOFL_DEBUG
+#if SOFL_DEBUG && 0
         SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "waitForExpose");
 #endif
         PUBLIC(this)->waitForExpose = false; // Gets flipped from TRUE on first expose.
         PUBLIC(this)->setSize(PUBLIC(this)->getSize());
     }
     if (this->wasresized) {
-#if SOFL_DEBUG
+#if SOFL_DEBUG && 0
         SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "wasresized");
 #endif
         PUBLIC(this)->sizeChanged(this->glSize);
@@ -369,7 +369,6 @@ SoFlGLWidgetP::eventHandler(Fl_Widget * /*widget*/ , void *closure, int event, b
 
 void
 SoFlGLWidgetP::onMouse(int event) {
-    SOFL_STUB();
 #if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidgetP::onMouse",
                            "mouse event");
@@ -414,7 +413,7 @@ SoFlGLWidgetP::addSizer() {
 bool
 SoFlGLWidgetP::hasZBuffer() const {
     SOFL_STUB();
-    const bool z_buffer = false; // SoFlGLArea::isGLFeatureAvailable(gl_attributes, WX_GL_DEPTH_SIZE);
+    const bool z_buffer = true; // SoFlGLArea::isGLFeatureAvailable(gl_attributes, WX_GL_DEPTH_SIZE);
     return (z_buffer);
 }
 
