@@ -329,14 +329,12 @@ SoFlGLWidget::redrawOverlay() {
 void
 SoFlGLWidget::initGraphic() {
     SOFL_STUB();
-    /*
     this->glLockNormal();
     // Need to set this explicitly when running on top of Open Inventor,
     // as it seems to have been forgotten there.
     // This code should be invoked from SoFlRenderArea::initGraphics()
     glEnable(GL_DEPTH_TEST);
     this->glUnlockNormal();
-    */
 }
 
 void

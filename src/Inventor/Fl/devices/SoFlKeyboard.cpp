@@ -44,7 +44,7 @@
 // *************************************************************************
 
 
-SoFlKeyboard::SoFlKeyboard(int eventmask ) {
+SoFlKeyboard::SoFlKeyboard(int eventmask) {
     PRIVATE(this) = new SoFlKeyboardP;
     PRIVATE(this)->eventmask = eventmask;
 }
@@ -54,35 +54,33 @@ SoFlKeyboard::~SoFlKeyboard(void) {
 }
 
 void
-SoFlKeyboard::enable(Fl_Widget* widget, SoFlEventHandler * handler, void * closure) {
+SoFlKeyboard::enable(Fl_Widget *widget, SoFlEventHandler *handler, void *closure) {
     SOFL_STUB();
 }
 
 void
-SoFlKeyboard::disable(Fl_Widget* widget, SoFlEventHandler * handler, void * closure) {
+SoFlKeyboard::disable(Fl_Widget *widget, SoFlEventHandler *handler, void *closure) {
     SOFL_STUB();
 }
 
 const SoEvent *
 SoFlKeyboard::translateEvent(int event) {
+    int key_event = event;
 
-    int key_event = 0;
-#if 0
-    if(!key_event) {
+    if (key_event == FL_KEYBOARD) {
 #ifdef SOFL_DEBUG
-        SoDebugError::postWarning("SoFlKeyboard::translateEvent",
-                                  "is not a key event!");
+    SoDebugError::postWarning("SoFlKeyboard::translateEvent",
+                              "key event!");
 #endif
-        return (0);
+    return (0);
     }
-
+#if 0
     SbBool keypress = key_event->GetEventType() == wxEVT_KEY_DOWN;
     SbBool keyrelease = key_event->GetEventType() == wxEVT_KEY_UP;
 
     SbBool keyevent = keypress || keyrelease;
 
     if (keyevent && (PRIVATE(this)->eventmask & (KEY_PRESS | KEY_RELEASE))) {
-
         if (!SoFlKeyboardP::translatetable)
             SoFlKeyboardP::make_translation_table();
 
@@ -93,7 +91,7 @@ SoFlKeyboard::translateEvent(int event) {
         // Allocate system-neutral event object once and reuse.
         if (!PRIVATE(this)->kbdevent) PRIVATE(this)->kbdevent = new SoKeyboardEvent;
 
-        PRIVATE(this)->kbdevent->setPrintableCharacter( key );
+        PRIVATE(this)->kbdevent->setPrintableCharacter(key);
 
         // Translate keycode fl -> So
         void *table;
@@ -109,9 +107,9 @@ SoFlKeyboard::translateEvent(int event) {
         else
             PRIVATE(this)->kbdevent->setState(SoButtonEvent::DOWN);
 
-        PRIVATE(this)->kbdevent->setShiftDown( key_event->ShiftDown());
-        PRIVATE(this)->kbdevent->setCtrlDown( key_event->ControlDown());
-        PRIVATE(this)->kbdevent->setAltDown( key_event->AltDown());
+        PRIVATE(this)->kbdevent->setShiftDown(key_event->ShiftDown());
+        PRIVATE(this)->kbdevent->setCtrlDown(key_event->ControlDown());
+        PRIVATE(this)->kbdevent->setAltDown(key_event->AltDown());
 
         this->setEventPosition(PRIVATE(this)->kbdevent,
                                key_event->GetX(),

@@ -138,32 +138,24 @@ const SoEvent *SoFlMouse::translateEvent(int event) {
 
     switch (event) {
         case FL_PUSH:
-            std::cout << "Tasto premuto: " << Fl::event_button()<<std::endl;
             if (PRIVATE(this)->eventmask & BUTTON_PRESS) {
-                std::cout << "Evento : BUTTON_PRESS" << Fl::event_button()<<std::endl;
                 PRIVATE(this)->buttonevent->setState(SoButtonEvent::DOWN);
                 switch (Fl::event_button()) {
                     case FL_LEFT_MOUSE:
                         PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::BUTTON1);
-                        std::cout << "Evento : SoMouseButtonEvent::BUTTON1" <<std::endl;
                         break;
                     case FL_RIGHT_MOUSE: PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::BUTTON2);
-                        std::cout << "Evento : SoMouseButtonEvent::BUTTON2" <<std::endl;
                         break;
                     case FL_MIDDLE_MOUSE: PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::BUTTON3);
-                        std::cout << "Evento : SoMouseButtonEvent::BUTTON3" <<std::endl;
                         break;
                     default: PRIVATE(this)->buttonevent->setButton(SoMouseButtonEvent::ANY);
-                        std::cout << "Evento : SoMouseButtonEvent::ANY" <<std::endl;
                         break;
                 }
                 conv = PRIVATE(this)->buttonevent;
             }
             break;
         case FL_RELEASE:
-                std::cout << "Tasto alzato PRIMA!!!!: " << Fl::event_button()<<std::endl;
             if (PRIVATE(this)->eventmask & BUTTON_RELEASE) {
-                std::cout << "Tasto alzato: " << Fl::event_button()<<std::endl;
                 PRIVATE(this)->buttonevent->setState(SoButtonEvent::UP);
                 conv = PRIVATE(this)->buttonevent;
             }

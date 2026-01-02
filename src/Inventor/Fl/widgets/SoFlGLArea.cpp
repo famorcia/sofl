@@ -43,7 +43,7 @@ SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
                    parent->y(),
                    parent->w(),
                    parent->h()), widget_p(parentW) {
-    mode(&attributes[0]);
+    mode(FL_RGB | FL_DEPTH | FL_DOUBLE);
     this->label("SoFlGLArea");
     gl_real_context = nullptr;
     is_gl_initialized = false;
@@ -86,7 +86,8 @@ void SoFlGLArea::draw() {
                            "%s",
                            "DRAW!!!!");
 #endif
-    widget_p->gl_exposed(9);
+
+    widget_p->concreteRedraw();
 }
 
 int SoFlGLArea::handle(int event) {
@@ -101,14 +102,11 @@ int SoFlGLArea::handle(int event) {
             return 1;
         case FL_PUSH:
         case FL_RELEASE:
-            widget_p->onMouse(event);
-            return 1;
         case FL_DRAG:
         case FL_MOVE:
             widget_p->onMouse(event);
             return 1;
         case FL_ENTER:
-            return 1;
         case FL_LEAVE:
             return 1;
         default:
@@ -123,6 +121,7 @@ void SoFlGLArea::InitGL() {
         this->make_current();
         gl_real_context = this->context();
         assert(gl_real_context != nullptr);
+        widget_p->initGL();
     }
 }
 

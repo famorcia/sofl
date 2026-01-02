@@ -43,8 +43,8 @@
 #define PRIVATE(obj) ((obj)->pimpl)
 #define PUBLIC(obj) ((obj)->pub)
 
-SoFlGLWidgetP::SoFlGLWidgetP(SoFlGLWidget * o)
-        : SoGuiGLWidgetP(o) {
+SoFlGLWidgetP::SoFlGLWidgetP(SoFlGLWidget *o)
+    : SoGuiGLWidgetP(o) {
     this->borderthickness = 0;
     this->oldcontext = nullptr;
 }
@@ -53,8 +53,7 @@ SoFlGLWidgetP::~SoFlGLWidgetP() {
 }
 
 void
-SoFlGLWidgetP::gl_init(int )
-{
+SoFlGLWidgetP::initGL() {
     SOFL_STUB();
 #if SOFL_DEBUG
     SoDebugError::postInfo("gl_init", "invoked");
@@ -64,7 +63,7 @@ SoFlGLWidgetP::gl_init(int )
 }
 
 void
-SoFlGLWidgetP::gl_reshape(int event) {
+SoFlGLWidgetP::reshape() {
     SOFL_STUB();
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidgetP::gl_reshape",
@@ -73,13 +72,14 @@ SoFlGLWidgetP::gl_reshape(int event) {
                            currentglwidget->h());
 #endif
 
-    this->glSize = SbVec2s( currentglarea->w(), currentglarea->h());
+    this->glSize = SbVec2s(currentglarea->w(), currentglarea->h());
     this->wasresized = true;
     pub->setSize(this->glSize);
 }
 
+
 void
-SoFlGLWidgetP::gl_exposed(int) {
+SoFlGLWidgetP::concreteRedraw() {
     SOFL_STUB();
 #if SOFL_DEBUG && 0
     SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "%f", SbTime::getTimeOfDay().getValue());
@@ -106,53 +106,53 @@ SoFlGLWidgetP::gl_exposed(int) {
 }
 
 static const char eventnaming[][50] = {
-        "None", // 0
-        "Timer",
-        "MouseButtonPress",
-        "MouseButtonRelease",
-        "MouseButtonDblClick",
-        "MouseMove",
-        "KeyPress",
-        "KeyRelease",
-        "FocusIn",
-        "FocusOut",
-        "Enter",
-        "Leave",
-        "Paint",
-        "Move",
-        "Resize",
-        "Create",
-        "Destroy",
-        "Show",
-        "Hide",
-        "Close",
-        "Quit", // 20
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "Accel", // 30
-        "Wheel",
-        "AccelAvailable", // 32
-        "CaptionChange",
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "Clipboard", // 40
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "SockAct", // 50
-        "AccelOverride", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "DragEnter", // 60
-        "DragMove",
-        "DragLeave",
-        "Drop",
-        "DragResponse", // 64
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "ChildInserted", // 70
-        "ChildRemoved",
-        "LayoutHint", // 72
-        "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
-        "*unknown*", "*unknown*",
-        "ActivateControl", // 80
-        "DeactivateControl"
+    "None", // 0
+    "Timer",
+    "MouseButtonPress",
+    "MouseButtonRelease",
+    "MouseButtonDblClick",
+    "MouseMove",
+    "KeyPress",
+    "KeyRelease",
+    "FocusIn",
+    "FocusOut",
+    "Enter",
+    "Leave",
+    "Paint",
+    "Move",
+    "Resize",
+    "Create",
+    "Destroy",
+    "Show",
+    "Hide",
+    "Close",
+    "Quit", // 20
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "Accel", // 30
+    "Wheel",
+    "AccelAvailable", // 32
+    "CaptionChange",
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "Clipboard", // 40
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "SockAct", // 50
+    "AccelOverride", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "DragEnter", // 60
+    "DragMove",
+    "DragLeave",
+    "Drop",
+    "DragResponse", // 64
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "ChildInserted", // 70
+    "ChildRemoved",
+    "LayoutHint", // 72
+    "*unknown*", "*unknown*", "*unknown*", "*unknown*", "*unknown*",
+    "*unknown*", "*unknown*",
+    "ActivateControl", // 80
+    "DeactivateControl"
 };
 
 // The GL widget rebuilding has been written to remember the previous
@@ -169,13 +169,12 @@ static const char eventnaming[][50] = {
 //  2) robustness; killing off the previous widget in the build-method
 //  below has nasty sideeffects (like "random" coredumps), since the
 //  event loop might be using it
-SoFlGLArea*
+SoFlGLArea *
 SoFlGLWidgetP::buildGLWidget() {
-
     try {
 #if SOFL_DEBUG
         SoDebugError::postInfo("SoFlGLWidgetP::buildGLWidget",
-                "%s, %s, %s, %s, %s",
+                               "%s, %s, %s, %s, %s",
                                PUBLIC(this)->isDoubleBuffer() ? "double" : "single",
                                this->hasZBuffer() ? "z-buffer" : "no z-buffer",
                                PUBLIC(this)->isRGBMode() ? "RGBA" : "colorindex",
@@ -206,28 +205,29 @@ SoFlGLWidgetP::buildGLWidget() {
 
         if (wasprevious
             // TODO: && QGLFormat_eq(*this->glformat, waspreviousarea->format())
-                ) {
+        ) {
             // Reenable the previous widget.
             if (this->currentglwidget) SoAny::si()->unregisterGLContext((void *) PUBLIC(this));
             this->currentglwidget = wasprevious;
             this->currentglarea = waspreviousarea;
             SoAny::si()->registerGLContext(PUBLIC(this), display, screen);
 #if SOFL_DEBUG
-                SoDebugError::postInfo("SoFlGLWidgetP::buildGLWidget",
-                                       "reused previously used GL widget");
+            SoDebugError::postInfo("SoFlGLWidgetP::buildGLWidget",
+                                   "reused previously used GL widget");
 #endif
         } else {
             if (this->currentglwidget)
                 SoAny::si()->unregisterGLContext(PUBLIC(this));
 
-            this->currentglarea = new SoFlGLArea( glparent, this, gl_attributes);
+            this->currentglarea = new SoFlGLArea(glparent, this, gl_attributes);
             this->currentglwidget = this->currentglarea;
             SoAny::si()->registerGLContext(PUBLIC(this), display, screen);
             // Send this one to the final hunting grounds.
             delete wasprevious;
         }
 
-        if (SOFL_DEBUG) { // Warn about requested features that we didn't get.
+        if (SOFL_DEBUG) {
+            // Warn about requested features that we didn't get.
             // TODO: QSurfaceFormat * w = this->glformat; // w(anted)
             // TODO: QSurfaceFormat g = this->currentglarea->format(); // g(ot)
 
@@ -250,15 +250,15 @@ SoFlGLWidgetP::buildGLWidget() {
             // TODO:     GLWIDGET_FEATURECMP(samples, 0, "no sample buffers", "sample buffers");
 #endif
 
-// TODO:
+            // TODO:
 #if 0
             if (QGLFormat_hasOverlay(w) != QGLFormat_hasOverlay(&g)) {
                 SoDebugError::postWarning("SoFlGLWidgetP::buildGLWidget",
                                           "wanted %s, but that is not supported "
                                           "by the OpenGL driver",
-                                          QGLFormat_hasOverlay(w) ?
-                                          "overlay plane(s)" :
-                                          "visual without overlay plane(s)");
+                                          QGLFormat_hasOverlay(w)
+                                              ? "overlay plane(s)"
+                                              : "visual without overlay plane(s)");
             }
 #endif
         }
@@ -268,32 +268,30 @@ SoFlGLWidgetP::buildGLWidget() {
 
         int frame = PUBLIC(this)->isBorder() ? this->borderthickness : 0;
         // TODO: this->currentglwidget->setGeometry(frame, frame,this->glSize[0] - 2*frame,this->glSize[1] - 2*frame);
-/*
-        this->currentglarea->Bind(wxEVT_SIZE, &SoFlGLWidgetP::gl_reshape, this);
-        this->currentglarea->Bind(SO_WX_GL_INIT, &SoFlGLWidgetP::gl_init, this);
-        this->currentglarea->Bind(SO_WX_GL_DRAW, &SoFlGLWidgetP::gl_exposed, this);
-        this->currentglarea->Bind(wxEVT_LEFT_DOWN, &SoFlGLWidgetP::onMouse, this);
-        this->currentglarea->Bind(wxEVT_RIGHT_DOWN, &SoFlGLWidgetP::onMouse, this);
-        this->currentglarea->Bind(wxEVT_LEFT_UP, &SoFlGLWidgetP::onMouse, this);
-        this->currentglarea->Bind(wxEVT_RIGHT_UP, &SoFlGLWidgetP::onMouse, this);
-        this->currentglarea->Bind(wxEVT_MOTION, &SoFlGLWidgetP::onMouse, this);
-        this->currentglarea->Bind(wxEVT_MOUSEWHEEL, &SoFlGLWidgetP::onMouse, this);
-        this->currentglarea->Bind(wxEVT_KEY_DOWN, &SoFlGLWidgetP::onKey, this);
-        this->currentglarea->Bind(wxEVT_KEY_UP, &SoFlGLWidgetP::onKey, this);
-*/
+        /*
+                this->currentglarea->Bind(wxEVT_SIZE, &SoFlGLWidgetP::gl_reshape, this);
+                this->currentglarea->Bind(SO_WX_GL_INIT, &SoFlGLWidgetP::gl_init, this);
+                this->currentglarea->Bind(SO_WX_GL_DRAW, &SoFlGLWidgetP::gl_exposed, this);
+                this->currentglarea->Bind(wxEVT_LEFT_DOWN, &SoFlGLWidgetP::onMouse, this);
+                this->currentglarea->Bind(wxEVT_RIGHT_DOWN, &SoFlGLWidgetP::onMouse, this);
+                this->currentglarea->Bind(wxEVT_LEFT_UP, &SoFlGLWidgetP::onMouse, this);
+                this->currentglarea->Bind(wxEVT_RIGHT_UP, &SoFlGLWidgetP::onMouse, this);
+                this->currentglarea->Bind(wxEVT_MOTION, &SoFlGLWidgetP::onMouse, this);
+                this->currentglarea->Bind(wxEVT_MOUSEWHEEL, &SoFlGLWidgetP::onMouse, this);
+                this->currentglarea->Bind(wxEVT_KEY_DOWN, &SoFlGLWidgetP::onKey, this);
+                this->currentglarea->Bind(wxEVT_KEY_UP, &SoFlGLWidgetP::onKey, this);
+        */
         // Reset to avoid unnecessary scenegraph redraws.
         PUBLIC(this)->waitForExpose = true;
 
         // We've changed to a new widget, so notify subclasses through this
         // virtual method.
         PUBLIC(this)->widgetChanged(this->currentglwidget);
-    }
-    catch (std::exception& e) {
+    } catch (std::exception &e) {
         SoDebugError::postWarning("SoFlGLWidgetP::buildGLWidget",
                                   "exception: %s",
                                   e.what());
-    }
-    catch(...) {
+    } catch (...) {
         SoDebugError::postWarning("SoFlGLWidgetP::buildGLWidget",
                                   "unknown exception");
     }
@@ -304,7 +302,7 @@ SoFlGLWidgetP::buildGLWidget() {
 const GLContext
 SoFlGLWidgetP::getNormalContext() {
     SOFL_STUB();
-    SoFlGLArea * w = this->currentglarea;
+    SoFlGLArea *w = this->currentglarea;
     if (w) return w->context();
     return nullptr;
 }
@@ -313,7 +311,7 @@ SoFlGLWidgetP::getNormalContext() {
 const GLContext
 SoFlGLWidgetP::getOverlayContext() {
     SOFL_STUB();
-    SoFlGLArea * w = this->currentglarea;
+    SoFlGLArea *w = this->currentglarea;
     // TODO: if (w) { return QGLWidget_overlayContext(w); }
     return nullptr;
 }
@@ -323,47 +321,39 @@ SoFlGLWidgetP::isDirectRendering() {
     SOFL_STUB();
     SbBool res = FALSE;
     //TODO: if(this->currentglarea && this->currentglarea->GetGLCTXAttrs().x11Direct)
-        res = TRUE;
+    res = TRUE;
     return (res);
 }
 
 void SoFlGLWidgetP::initGLModes(int glmodes) {
     SOFL_STUB();
-
     gl_attributes.clear();
-    if(glmodes & SO_GL_DOUBLE) {
+    if (glmodes & SO_GL_DOUBLE) {
         gl_attributes.push_back(GLX_DOUBLEBUFFER);
     }
-    if(glmodes & SO_GL_ZBUFFER) {
+    if (glmodes & SO_GL_ZBUFFER) {
         // 24 bit seems to be ok also on Windows
         gl_attributes.push_back(GLX_DEPTH_SIZE);
         gl_attributes.push_back(24);
     }
-    if(glmodes & SO_GL_RGB) {
+    if (glmodes & SO_GL_RGB) {
         gl_attributes.push_back(GLX_RGBA);
     }
-    if(glmodes & SO_GL_STEREO) {
+    if (glmodes & SO_GL_STEREO) {
         gl_attributes.push_back(GLX_STEREO);
     }
     gl_attributes.push_back(0);
-
-    /*
-    if(!SoFlGLArea::IsDisplaySupported(&gl_attributes[0])) {
-        SoDebugError::postInfo("SoFlGLWidget::SoFlGLWidget",
-                               "required GL modes are not supported!");
-    }
-    */
 }
 
 void
-SoFlGLWidgetP::eventHandler(Fl_Widget * /*widget*/ , void *closure, int event, bool *) {
+SoFlGLWidgetP::eventHandler(Fl_Widget * /*widget*/, void *closure, int event, bool *) {
     SOFL_STUB();
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidgetP::eventHandler",
                            "");
 #endif
     assert(closure != nullptr);
-    SoFlGLWidget * component = static_cast<SoFlGLWidgetP *>(closure)->pub;
+    SoFlGLWidget *component = static_cast<SoFlGLWidgetP *>(closure)->pub;
     component->processEvent(event);
 }
 
@@ -387,7 +377,7 @@ SoFlGLWidgetP::onKey(int event) {
 }
 
 bool
-SoFlGLWidgetP::isAPanel(Fl_Widget* window) {
+SoFlGLWidgetP::isAPanel(Fl_Widget *window) {
     SOFL_STUB();
     return (false); //window->IsKindOf(wxCLASSINFO(wxPanel)));
 }
@@ -395,19 +385,19 @@ SoFlGLWidgetP::isAPanel(Fl_Widget* window) {
 void
 SoFlGLWidgetP::addSizer() {
     SOFL_STUB();
-/*
-    if(glparent->GetSizer()) {
-        SoDebugError::postWarning("SoFlGLWidgetP::addSizer",
-                                  "panel holds a sizer, the old one will be removed");
-    }
+    /*
+        if(glparent->GetSizer()) {
+            SoDebugError::postWarning("SoFlGLWidgetP::addSizer",
+                                      "panel holds a sizer, the old one will be removed");
+        }
 
-    wxFlexGridSizer* sizer = new wxFlexGridSizer(0);
-    sizer->AddGrowableCol(0);
-    sizer->AddGrowableRow(0);
-    glparent->SetSizer(sizer);
-    sizer->Add(this->currentglarea, 0, wxEXPAND | wxALL, 0);
-    sizer->Layout();
-    */
+        wxFlexGridSizer* sizer = new wxFlexGridSizer(0);
+        sizer->AddGrowableCol(0);
+        sizer->AddGrowableRow(0);
+        glparent->SetSizer(sizer);
+        sizer->Add(this->currentglarea, 0, wxEXPAND | wxALL, 0);
+        sizer->Layout();
+        */
 }
 
 bool

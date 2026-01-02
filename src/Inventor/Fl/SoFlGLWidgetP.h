@@ -71,11 +71,10 @@ public:
 
     const GLContext * oldcontext;
 
-    void gl_init(int);
-    void gl_reshape(int);
-    void gl_exposed(int);
+    void initGL();
+    void reshape();
+    void concreteRedraw();
     void onMouse(int);
-    // void onDrag(int button, int x, int y);
     void onKey(int);
 
     static bool isAPanel(Fl_Widget*);
