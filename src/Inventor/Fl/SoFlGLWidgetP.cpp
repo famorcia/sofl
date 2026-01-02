@@ -220,7 +220,7 @@ SoFlGLWidgetP::buildGLWidget() {
             if (this->currentglwidget)
                 SoAny::si()->unregisterGLContext(PUBLIC(this));
 
-            this->currentglarea = new SoFlGLArea( glparent, gl_attributes);
+            this->currentglarea = new SoFlGLArea( glparent, this, gl_attributes);
             this->currentglwidget = this->currentglarea;
             SoAny::si()->registerGLContext(PUBLIC(this), display, screen);
             // Send this one to the final hunting grounds.

@@ -196,8 +196,10 @@ SoFlGLWidget::setDoubleBuffer(const SbBool enable) {
 SbBool
 SoFlGLWidget::isDoubleBuffer() const {
     SOFL_STUB();
-    const bool double_buffer = false;
-    // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes,WX_GL_DOUBLEBUFFER);
+
+    // TODO: add GL_modes
+    auto v  = PRIVATE(this)->gl_attributes;
+    const auto double_buffer = true; // static_cast<bool>(mode & FL_DOUBLE);
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::isDoubleBuffer",
                            ": %d",

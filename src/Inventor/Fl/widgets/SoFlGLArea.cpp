@@ -35,14 +35,27 @@
 #include "sofldefs.h"
 
 #include <map>
+#include <GL/gl.h>
 
+static void Timer_CB(void *userdata) {
+    auto pb = static_cast<SoFlGLArea *>(userdata);
+    if (!pb)
+        return;
+
+    SoDebugError::postInfo("::SoFlGLArea::Timer_CB","%s", "Timer_CB");
+    pb->redraw();
+    Fl::repeat_timeout(1.0 / 24.0, Timer_CB, userdata);
+}
 SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
+    SoFlGLWidgetP* parentW,
                        const std::vector<int> &attributes)
     : Fl_Gl_Window(parent->x(),
                    parent->y(),
                    parent->w(),
-                   parent->h()) {
+                   parent->h()),widget_p(parentW){
     SOFL_STUB();
+    Fl::add_timeout(1.0 / 24.0, Timer_CB, (void *) this); // 24fps timer
+
     mode(&attributes[0]);
     this->label("SoFlGLArea");
     is_gl_initialized = false;
@@ -61,15 +74,46 @@ void SoFlGLArea::draw() {
                            w(),
                            h());
 #endif
+
     if (!valid()) {
+        InitGL();
+        // ...other initialization...
+#if SOFL_DEBUG
+        SoDebugError::postInfo("SoFlGLArea::draw",
+                               "%s",
+                               "!valid()");
+#endif
     }
-    InitGL();
-    this->redraw();
+
+    if (!context_valid()) {
+        // ...load textures, etc. ...
+#if SOFL_DEBUG
+        SoDebugError::postInfo("SoFlGLArea::draw",
+                               "%s",
+                               "!context_valid()");
+#endif
+      }
+
+    glClear(GL_DEPTH_BUFFER_BIT);
+    static bool onOff= true;
+    if (onOff) {
+        onOff= false;
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    } else {
+        onOff= true;
+        glClearColor(1,1,1,0);
+    }
+#if SOFL_DEBUG
+    SoDebugError::postInfo("SoFlGLArea::draw",
+                           "%s",
+                           "DRAW!!!!");
+#endif
+    widget_p->gl_exposed(9);
 }
 
 int SoFlGLArea::handle(int event) {
     SOFL_STUB();
-    this->redraw();
+    // this->redraw();
     return Fl_Gl_Window::handle(event);
 }
 

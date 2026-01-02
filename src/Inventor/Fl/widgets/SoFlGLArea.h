@@ -38,31 +38,33 @@
 
 class SoFlGLWidgetP;
 
-class SoFlGLArea : public Fl_Gl_Window
-{
+class SoFlGLArea : public Fl_Gl_Window {
 public:
-
     typedef std::vector<int> GLFormat;
 
     SoFlGLArea(Fl_Widget *parent,
-               const GLFormat& );
+               SoFlGLWidgetP *parentWidget,
+               const GLFormat &);
 
     virtual ~SoFlGLArea();
 
     void makeCurrent();
 
-    static bool isGLFeatureAvailable(const GLFormat& ,
+    static bool isGLFeatureAvailable(const GLFormat &,
                                      int feature);
 
-    static bool areEqual(const GLFormat& format1,
-                         const GLFormat& format2);
+    static bool areEqual(const GLFormat &format1,
+                         const GLFormat &format2);
 
 protected:
     int handle(int event) override;
-    void draw() override ;
+
+    void draw() override;
 
 private:
     void InitGL();
+
+    SoFlGLWidgetP* widget_p;
     GLContext gl_real_context;
     bool is_gl_initialized;
     GLFormat gl_format;
