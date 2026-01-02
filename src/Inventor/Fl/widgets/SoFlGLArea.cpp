@@ -37,15 +37,6 @@
 #include <map>
 #include <GL/gl.h>
 
-static void Timer_CB(void *userdata) {
-    auto pb = static_cast<SoFlGLArea *>(userdata);
-    if (!pb)
-        return;
-
-    SoDebugError::postInfo("::SoFlGLArea::Timer_CB","%s", "Timer_CB");
-    pb->redraw();
-    Fl::repeat_timeout(1.0 / 24.0, Timer_CB, userdata);
-}
 SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
     SoFlGLWidgetP* parentW,
                        const std::vector<int> &attributes)
@@ -54,7 +45,6 @@ SoFlGLArea::SoFlGLArea(Fl_Widget *parent,
                    parent->w(),
                    parent->h()),widget_p(parentW){
     SOFL_STUB();
-    Fl::add_timeout(1.0 / 24.0, Timer_CB, (void *) this); // 24fps timer
 
     mode(&attributes[0]);
     this->label("SoFlGLArea");

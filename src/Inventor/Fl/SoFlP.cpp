@@ -39,6 +39,8 @@
 
 #include <FL/Fl_Window.H>
 
+#undef SOFL_DEBUG
+
 namespace {
     void timerQueueTimerCB(void *userdata) {
 #if SOFL_DEBUG
@@ -53,7 +55,7 @@ namespace {
         // explicitly trigger it ourselves here.
         SoGuiP::sensorQueueChanged(nullptr);
     }
-    
+
     // The delay sensor timeout point has been reached, so process the
     // delay queue even though the system is not idle (to avoid
     // starvation).
@@ -87,10 +89,14 @@ SoFlP::build_fl_window() {
     if (!main_app) {
         is_a_soflp_app = true;
         main_frame = main_app = new Fl_Window(640, 480);
-    } else if (SOFL_DEBUG) {
+    }
+#if SOFL_DEBUG
+    else
+    if (SOFL_DEBUG) {
         SoDebugError::postWarning("SoFlP::build_fl_window",
                                   "Fl_Window already built");
     }
+#endif
 }
 
 void
@@ -148,11 +154,12 @@ SoFlP::sensorQueueChanged() {
 
     // Set up idle notification to delay queue processing if necessary.
     if (sm->isDelaySensorPending()) {
-        if (SOFL_DEBUG) {
-            // debug
-            SoDebugError::postInfo("SoFlP::sensorQueueChanged",
-                                   "delay sensor pending");
-        }
+#if SOFL_DEBUG
+        // debug
+        SoDebugError::postInfo("SoFlP::sensorQueueChanged",
+                               "delay sensor pending");
+#endif
+
 
         if (!Fl::has_timeout(delayTimeoutTimerCB, nullptr)) {
             const SbTime &delaySensorTimeout = SoDB::getDelaySensorTimeout();
