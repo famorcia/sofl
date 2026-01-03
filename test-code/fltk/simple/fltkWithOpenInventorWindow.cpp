@@ -54,10 +54,6 @@
 #include <FL/Fl_Light_Button.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Text_Buffer.H>
-#include <GL/glew.h>
-#include <FL/gl.h> // for gl_texture_reset()
-
-void add_output(const char *format, ...);
 
 #include <Inventor/Fl/SoFl.h>
 #include <Inventor/Fl/SoFlRenderArea.h>
@@ -66,6 +62,8 @@ void add_output(const char *format, ...);
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoPerspectiveCamera.h>
 #include <Inventor/nodes/SoSeparator.h>
+
+void add_output(const char *format, ...);
 
 SoFlRenderArea *
 buildFlRenderArea(Fl_Window *parent, int x, int y, int w, int h) {
