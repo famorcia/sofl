@@ -1,4 +1,5 @@
-
+#TODO: porting on fltk
+return()
 executable(thumbwheel SOURCES thumbwheel.cpp LIBS SoFl)
 
 executable(gridbagsizer SOURCES gridbagsizer.cpp LIBS SoFl)
@@ -9,4 +10,3 @@ executable(multisizer SOURCES multisizer.cpp LIBS SoFl)
 
 executable(buttons SOURCES buttons.cpp LIBS SoFl)
 
-executable(glarea SOURCES glarea.cpp LIBS SoFl)

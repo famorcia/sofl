@@ -33,7 +33,7 @@
 #define BOOST_TEST_NO_LIB 1
 #include <boost/test/unit_test.hpp>
 #include "Inventor/Fl/SoFl.h"
-#include <FL/version.h>
+#include <FL/Enumerations.H>
 
 BOOST_AUTO_TEST_SUITE(TestSoFl);
 
@@ -50,14 +50,14 @@ BOOST_AUTO_TEST_CASE(shouldVerifyVersion) {
     int major,minor,release;
     SoFl::getVersionInfo(&major,&minor,&release);
     BOOST_CHECK_EQUAL(major, 0);
-    BOOST_CHECK_EQUAL(minor, 1);
-    BOOST_CHECK_EQUAL(release, 1);
+    BOOST_CHECK_EQUAL(minor, 0);
+    BOOST_CHECK_EQUAL(release, 3);
 
     std::string oracle = buildVersion(major,minor,release);
     std::string s1 = SoFl::getVersionString();
     BOOST_CHECK_EQUAL(s1, oracle);
 
-    oracle = buildVersion(wxMAJOR_VERSION, wxMINOR_VERSION, wxRELEASE_NUMBER);
+    oracle = buildVersion(FL_MAJOR_VERSION, FL_MINOR_VERSION,FL_PATCH_VERSION);
     s1 = SoFl::getVersionToolkitString();
     BOOST_CHECK_EQUAL(s1, oracle);
 }

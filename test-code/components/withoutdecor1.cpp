@@ -33,6 +33,7 @@
 #include <Inventor/Fl/SoFl.h>
 #include <Inventor/Fl/viewers/SoFlExaminerViewer.h>
 #include <Inventor/nodes/SoCone.h>
+#include <FL/Fl_Window.H>
 
 // This makes sure that building a widget with BUILD_NONE, and then
 // calling setDecoration( TRUE ) works.
@@ -49,7 +50,7 @@ int main(int argc, char ** argv)
   viewer->show();
   SoFl::show(window);
 
-  window->SetSize(500, 500);
+  window->size(500, 500);
 
   SoFl::mainLoop();
 

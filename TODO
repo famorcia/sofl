@@ -2,7 +2,10 @@ TODO
 ====
 
 * [ ] Make all examples work
-* [ ] Fix modes for OpenGL in windows
 * [ ] Add key events management
 * [ ] Add more widgets (only Area for the time being)
+* [ ] Add an extension of SoFlRenderArea for having widget over GL context
 
+DONE
+====
+* [X] Fix modes for OpenGL in windows

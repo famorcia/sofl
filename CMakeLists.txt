@@ -187,7 +187,7 @@ foreach (_config ${CMAKE_CONFIGURATION_TYPES})
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${_config} "${CMAKE_BINARY_DIR}/bin")
 endforeach()
 
-set(GUI_TOOLKIT_VERSION ${fltk_VERSION_MAJOR}.${fltk_VERSION_MINOR}.${fltk_VERSION_PATCH})
+set(GUI_TOOLKIT_VERSION ${FLTK_VERSION_MAJOR}.${FLTK_VERSION_MINOR}.${FLTK_VERSION_PATCH})
 
 if(WIN32)
   if(MINGW)
@@ -421,6 +421,7 @@ add_subdirectory(src)
 
 ##### small test programs (to be run interactively)
 if (SO${GUI}_BUILD_TESTS)
+  enable_testing()
   add_subdirectory(test-code)
   add_subdirectory(testsuite)
 endif()

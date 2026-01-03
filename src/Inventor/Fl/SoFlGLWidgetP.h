@@ -52,20 +52,20 @@ public:
 
     virtual ~SoFlGLWidgetP();
 
-    void initGLModes(int);
+    void initGLModes(GLModes);
 
-    std::vector<int> gl_attributes;
     SoFlGLArea* buildGLWidget();
 
+    Fl_Mode gl_attributes;
     SbVec2s glSize;
     SbVec2s glSizeUnscaled;
-    SbBool wasresized;
+    SbBool wasresized{};
 
-    Fl_Window * currentglwidget;
-    Fl_Window * previousglwidget;
-    SoFlGLArea * currentglarea;
-    SoFlGLArea * previousglarea;
-    Fl_Window * glparent;
+    Fl_Window * currentglwidget{};
+    Fl_Window * previousglwidget{};
+    SoFlGLArea * currentglarea{};
+    SoFlGLArea * previousglarea{};
+    Fl_Window * glparent{};
 
     int borderthickness;
 

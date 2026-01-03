@@ -39,17 +39,17 @@
 
 SoFlGLArea::SoFlGLArea(Fl_Window *parent,
                        SoFlGLWidgetP *parentW,
-                       const std::vector<int> &attributes)
+                       Fl_Mode attributes)
     : Fl_Gl_Window(parent->x(),
                    parent->y(),
                    parent->w(),
-                   parent->h()), widget_p(parentW) {
-    // TODO: force modes, to be fixed
-    mode(FL_RGB | FL_DEPTH | FL_DOUBLE);
+                   parent->h())
+, widget_p(parentW)
+, gl_format(attributes){
+    mode(gl_format);
     this->label("SoFlGLArea");
     gl_real_context = nullptr;
     is_gl_initialized = false;
-    gl_format = attributes;
 }
 
 SoFlGLArea::~SoFlGLArea() {

@@ -1,5 +1,5 @@
 /**************************************************************************\
- * BSD 3-Clause License
+* BSD 3-Clause License
  *
  * Copyright (c) 2025, Fabrizio Morciano
  * All rights reserved.
@@ -31,20 +31,42 @@
 \**************************************************************************/
 
 #define BOOST_TEST_NO_LIB 1
+#define BOOST_TEST_MODULE TestSoFlGLWidgetP
+
 #include <boost/test/unit_test.hpp>
-#include "Inventor/Fl/widgets/SoFlGLArea.h"
 
-BOOST_AUTO_TEST_SUITE(TestSoFlGLArea);
+#include "Inventor/Fl/SoFlGLWidgetP.h"
+#include "Inventor/Fl/SoFlGLWidget.h"
+#include <FL/Enumerations.H>
 
-BOOST_AUTO_TEST_CASE(shouldFailIf_isGLFeatureAvailable_Empty) {
-    Fl_Mode format = FL_DOUBLE;
-    BOOST_CHECK(!SoFlGLArea::isGLFeatureAvailable(format, FL_DOUBLE));
+
+BOOST_AUTO_TEST_SUITE(TestSoFlGLWidgetP)
+
+BOOST_AUTO_TEST_CASE(test_initGLModes_conversion) {
+    auto private_impl = new SoFlGLWidgetP (nullptr);
+
+    // Test Double Buffer
+    private_impl->initGLModes(SO_GL_DOUBLE);
+    BOOST_CHECK(private_impl->gl_attributes & FL_DOUBLE);
+
+    // Test Z-Buffer (Depth)
+    private_impl->initGLModes(SO_GL_ZBUFFER);
+    BOOST_CHECK(private_impl->gl_attributes & FL_DEPTH);
+
+    // Test Stereo
+    private_impl->initGLModes(SO_GL_STEREO);
+    BOOST_CHECK(private_impl->gl_attributes & FL_STEREO);
+
+    // Test combinazione multipla
+    private_impl->initGLModes(static_cast<GLModes>(SO_GL_RGB | SO_GL_DOUBLE | SO_GL_ZBUFFER));
+    BOOST_CHECK(private_impl->gl_attributes & FL_RGB8);
+    BOOST_CHECK(private_impl->gl_attributes & FL_DOUBLE);
+    BOOST_CHECK(private_impl->gl_attributes & FL_DEPTH);
+
+    // Test RGB mode
+    private_impl->initGLModes(SO_GL_RGB);
+    BOOST_CHECK(private_impl->gl_attributes & FL_RGB8);
+    Fl::run();
 }
 
-BOOST_AUTO_TEST_CASE(isGLFeatureAvailable) {
-    Fl_Mode format = FL_DOUBLE;
-    BOOST_CHECK(SoFlGLArea::isGLFeatureAvailable(format, FL_DOUBLE));
-
-    BOOST_CHECK(!SoFlGLArea::isGLFeatureAvailable(format, FL_STEREO));
-}
-BOOST_AUTO_TEST_SUITE_END();
+BOOST_AUTO_TEST_SUITE_END()

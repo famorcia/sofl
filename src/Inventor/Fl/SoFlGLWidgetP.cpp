@@ -54,9 +54,8 @@ SoFlGLWidgetP::~SoFlGLWidgetP() {
 
 void
 SoFlGLWidgetP::initGL() {
-    SOFL_STUB();
 #if SOFL_DEBUG
-    SoDebugError::postInfo("gl_init", "invoked");
+    SoDebugError::postInfo("SoFlGLWidgetP::initGL", "invoked");
 #endif
 
     PUBLIC(this)->initGraphic();
@@ -66,7 +65,7 @@ void
 SoFlGLWidgetP::reshape() {
     SOFL_STUB();
 #if SOFL_DEBUG
-    SoDebugError::postInfo("SoFlGLWidgetP::gl_reshape",
+    SoDebugError::postInfo("SoFlGLWidgetP::reshape",
                            "<%d, %d>",
                            currentglwidget->w(),
                            currentglwidget->h());
@@ -77,24 +76,22 @@ SoFlGLWidgetP::reshape() {
     pub->setSize(this->glSize);
 }
 
-
 void
 SoFlGLWidgetP::concreteRedraw() {
-    SOFL_STUB();
-#if SOFL_DEBUG && 0
-    SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "%f", SbTime::getTimeOfDay().getValue());
+#if SOFL_DEBUG
+    SoDebugError::postInfo("SoFlGLWidgetP::concreteRedraw", "%f", SbTime::getTimeOfDay().getValue());
 #endif
 
     if (PUBLIC(this)->waitForExpose) {
-#if SOFL_DEBUG && 0
-        SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "waitForExpose");
+#if SOFL_DEBUG
+        SoDebugError::postInfo("SoFlGLWidgetP::concreteRedraw", "waitForExpose");
 #endif
         PUBLIC(this)->waitForExpose = false; // Gets flipped from TRUE on first expose.
         PUBLIC(this)->setSize(PUBLIC(this)->getSize());
     }
     if (this->wasresized) {
-#if SOFL_DEBUG && 0
-        SoDebugError::postInfo("SoFlGLWidgetP::gl_exposed", "wasresized");
+#if SOFL_DEBUG
+        SoDebugError::postInfo("SoFlGLWidgetP::concreteRedraw", "wasresized");
 #endif
         PUBLIC(this)->sizeChanged(this->glSize);
         this->wasresized = false;
@@ -325,24 +322,22 @@ SoFlGLWidgetP::isDirectRendering() {
     return (res);
 }
 
-void SoFlGLWidgetP::initGLModes(int glmodes) {
-    SOFL_STUB();
-    gl_attributes.clear();
-    if (glmodes & SO_GL_DOUBLE) {
-        gl_attributes.push_back(GLX_DOUBLEBUFFER);
+/**
+ * Convert from Open Inventor SO_<mode> to fltk Fl_Mode (Enumeration.H)
+ * @param glmodes Open Inventor GLModes
+ */
+void SoFlGLWidgetP::initGLModes(GLModes glModes) {
+    int modes = FL_RGB8;
+    if (glModes & SO_GL_DOUBLE) {
+        modes |= FL_DOUBLE;
     }
-    if (glmodes & SO_GL_ZBUFFER) {
-        // 24 bit seems to be ok also on Windows
-        gl_attributes.push_back(GLX_DEPTH_SIZE);
-        gl_attributes.push_back(24);
+    if (glModes & SO_GL_ZBUFFER) {
+        modes |= FL_DEPTH;
     }
-    if (glmodes & SO_GL_RGB) {
-        gl_attributes.push_back(GLX_RGBA);
+    if (glModes & SO_GL_STEREO) {
+        modes |= FL_STEREO;
     }
-    if (glmodes & SO_GL_STEREO) {
-        gl_attributes.push_back(GLX_STEREO);
-    }
-    gl_attributes.push_back(0);
+    gl_attributes = static_cast<Fl_Mode>(modes);
 }
 
 void

@@ -34,27 +34,26 @@
 #define SOFL_SOFLGLAREA_H
 
 #include <FL/Fl_Gl_Window.H>
-#include <vector>
+#include <FL/Enumerations.H>
 
 class SoFlGLWidgetP;
 
 class SoFlGLArea : public Fl_Gl_Window {
 public:
-    typedef std::vector<int> GLFormat;
 
     SoFlGLArea(Fl_Window *parent,
                SoFlGLWidgetP *parentWidget,
-               const GLFormat &);
+               Fl_Mode );
 
     virtual ~SoFlGLArea();
 
     void makeCurrent();
 
-    static bool isGLFeatureAvailable(const GLFormat &,
-                                     int feature);
+    static bool isGLFeatureAvailable(Fl_Mode &,
+                                     Fl_Mode feature);
 
-    static bool areEqual(const GLFormat &format1,
-                         const GLFormat &format2);
+    static bool areEqual(Fl_Mode &format1,
+                         Fl_Mode &format2);
 
 protected:
     int handle(int event) override;
@@ -67,7 +66,7 @@ private:
     SoFlGLWidgetP* widget_p;
     GLContext gl_real_context;
     bool is_gl_initialized;
-    GLFormat gl_format;
+    Fl_Mode gl_format;
 };
 
 

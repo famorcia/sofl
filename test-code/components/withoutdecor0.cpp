@@ -30,6 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
+#include <FL/Fl_Window.H>
 #include <Inventor/Fl/SoFl.h>
 
 #include <Inventor/Fl/SoFl.h>
@@ -51,7 +52,7 @@ int main(int argc, char ** argv)
   viewer->show();
   SoFl::show(window);
 
-  window->SetSize(500, 500);
+  window->size(500, 500);
 
   SoFl::mainLoop();
 

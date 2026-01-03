@@ -53,7 +53,7 @@ SoFlGLWidget::SoFlGLWidget(Fl_Window *const parent,
       waitForExpose(true),
       drawToFrontBuffer(false) {
     PRIVATE(this) = new SoFlGLWidgetP(this);
-    PRIVATE(this)->initGLModes(glmodes);
+    PRIVATE(this)->initGLModes(static_cast<GLModes>(glmodes));
 
     PRIVATE(this)->glSize = SbVec2s(0, 0);
     PRIVATE(this)->glSizeUnscaled = SbVec2s(0, 0);
@@ -101,7 +101,6 @@ SoFlGLWidget::isQuadBufferStereo() const {
 
 void
 SoFlGLWidget::setGLSize(const SbVec2s size) {
-    SOFL_STUB();
     if (size == PRIVATE(this)->glSize) return;
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::setGLSize",
@@ -130,8 +129,7 @@ SoFlGLWidget::getGLAspectRatio() const {
 
 SbBool
 SoFlGLWidget::isRGBMode() {
-    SOFL_STUB();
-    constexpr bool rgb_mode = true; // SoFlGLArea::isGLFeatureAvailable(PRIVATE(this)->gl_attributes, WX_GL_RGBA);
+    const bool rgb_mode = static_cast<bool>(PRIVATE(this)->gl_attributes & FL_RGB8);;
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::isRGBMode",
                            ": %d",
@@ -163,7 +161,6 @@ SoFlGLWidget::glUnlockOverlay() {
 
 void
 SoFlGLWidget::glSwapBuffers() {
-    SOFL_STUB();
     PRIVATE(this)->currentglarea->swap_buffers();
 }
 
@@ -188,14 +185,16 @@ SoFlGLWidget::isBorder() const {
 void
 SoFlGLWidget::setDoubleBuffer(const SbBool enable) {
     SOFL_STUB();
+    if (enable == TRUE) {
+        PRIVATE(this)->gl_attributes = static_cast<Fl_Mode>(PRIVATE(this)->gl_attributes | FL_DOUBLE);
+    } else {
+        PRIVATE(this)->gl_attributes = static_cast<Fl_Mode>(PRIVATE(this)->gl_attributes ^ FL_DOUBLE);
+    }
 }
 
 SbBool
 SoFlGLWidget::isDoubleBuffer() const {
-    SOFL_STUB();
-    // TODO: add GL_modes
-    auto v  = PRIVATE(this)->gl_attributes;
-    const auto double_buffer = true; // static_cast<bool>(mode & FL_DOUBLE);
+    const auto double_buffer = static_cast<bool>(PRIVATE(this)->gl_attributes & FL_DOUBLE);
 #if SOFL_DEBUG
     SoDebugError::postInfo("SoFlGLWidget::isDoubleBuffer",
                            ": %d",
@@ -312,6 +311,13 @@ SoFlGLWidget::processEvent(int event) {
     // Nothing is done here for the SoFlGLWidget, as realize, resize and
     // expose events are caught by explicitly attaching signal callbacks
     // to the widget.
+#if SOFL_DEBUG && 0
+    SoDebugError::postInfo("SoFlGLWidget::processEvent",
+                           "<%d>",
+                           event
+    );
+#endif
+
 }
 
 Fl_Window *
@@ -328,7 +334,12 @@ SoFlGLWidget::redrawOverlay() {
 
 void
 SoFlGLWidget::initGraphic() {
-    SOFL_STUB();
+#if SOFL_DEBUG
+    SoDebugError::postInfo("SoFlGLWidget::initGraphic",
+                           ":%s",
+                           __PRETTY_FUNCTION__
+    );
+#endif
     this->glLockNormal();
     // Need to set this explicitly when running on top of Open Inventor,
     // as it seems to have been forgotten there.
